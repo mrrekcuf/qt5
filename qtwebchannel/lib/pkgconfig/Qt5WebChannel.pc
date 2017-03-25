@@ -1,0 +1,14 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 WebChannel
+Description: Qt WebChannel module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5WebChannel 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/lib -lQt5Qml -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5Network -lQt5Core -lstdc++ -lm -lpthread   
+Cflags: -I${includedir}/QtWebChannel -I${includedir}
+Requires: Qt5Core
+

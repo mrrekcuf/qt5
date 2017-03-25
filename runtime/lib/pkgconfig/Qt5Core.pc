@@ -1,0 +1,15 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+host_bins=${prefix}/bin/bin
+qt_config=minimal-config small-config medium-config large-config full-config linuxfb opengl opengles2 shared qpa reduce_exports clock-gettime clock-monotonic posix_fallocate mremap getaddrinfo ipv6ifname getifaddrs inotify system-jpeg system-png png system-freetype no-harfbuzz system-zlib iconv openssl alsa concurrent audio-backend release
+
+Name: Qt5 Core
+Description: Qt Core module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5Core 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -lstdc++ -lm -lpthread -lz -L/opt/qt.palm/qtbase/runtime/lib -lqtpcre -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -lstdc++ -lm -ldl -lrt  
+Cflags: -I${includedir}/QtCore -I${includedir}
+

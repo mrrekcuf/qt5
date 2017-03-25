@@ -1,0 +1,33 @@
+executing config test openal
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/openal && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/openal
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/openal && make
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ -o .obj/main.o main.cpp
+main.cpp:40: warning: unused parameter ‘argc’
+main.cpp:40: warning: unused parameter ‘argv’
+arm-none-linux-gnueabi-g++ -Wl,--allow-shlib-undefined --sysroot=/opt/PalmPDK/arm-gcc/sysroot -Wl,-O1 -o openal .obj/main.o   -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -lopenal 
+test openal succeeded
+executing config test alsa
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/alsa && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/alsa
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/alsa && make
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ -o .obj/alsatest.o alsatest.cpp
+alsatest.cpp:34:28: error: alsa/asoundlib.h: No such file or directory
+alsatest.cpp:36:2: error: #error "Alsa version found too old, require >= 1.0.10"
+alsatest.cpp:39: warning: unused parameter ‘argc’
+alsatest.cpp:39: warning: unused parameter ‘argv’
+Makefile:597: recipe for target '.obj/alsatest.o' failed
+make: *** [.obj/alsatest.o] Error 1
+test alsa FAILED
+executing config test resourcepolicy
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/resourcepolicy && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/resourcepolicy
+Project ERROR: libresourceqt5 development package not found
+test resourcepolicy FAILED
+executing config test gpu_vivante
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/gpu_vivante && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/gpu_vivante
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/config.tests/gpu_vivante && make
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ -o .obj/main.o main.cpp
+main.cpp:37: error: ‘GL_VIV_YV12’ was not declared in this scope
+main.cpp:39: warning: unused parameter ‘argc’
+main.cpp:39: warning: unused parameter ‘argv’
+Makefile:599: recipe for target '.obj/main.o' failed
+make: *** [.obj/main.o] Error 1
+test gpu_vivante FAILED

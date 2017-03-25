@@ -1,0 +1,70 @@
+executing config test jasper
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/jasper && /opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/qmake -spec /opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/jasper
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/jasper && make
+make[1]: Entering directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/jasper'
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -o .obj/jasper.o jasper.cpp
+jasper.cpp:36:27: error: jasper/jasper.h: No such file or directory
+jasper.cpp: In function ‘int main(int, char**)’:
+jasper.cpp:41: error: ‘JAS_VERSION’ was not declared in this scope
+Makefile:375: recipe for target '.obj/jasper.o' failed
+make[1]: *** [.obj/jasper.o] Error 1
+make[1]: Leaving directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/jasper'
+test jasper FAILED
+executing config test libmng
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libmng && /opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/qmake -spec /opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libmng
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libmng && make
+make[1]: Entering directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libmng'
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -o .obj/libmng.o libmng.cpp
+libmng.cpp:35:20: error: libmng.h: No such file or directory
+libmng.cpp: In function ‘int main(int, char**)’:
+libmng.cpp:39: error: ‘mng_handle’ was not declared in this scope
+libmng.cpp:39: error: expected `;' before ‘hMNG’
+libmng.cpp:40: error: ‘hMNG’ was not declared in this scope
+libmng.cpp:40: error: ‘mng_cleanup’ was not declared in this scope
+Makefile:375: recipe for target '.obj/libmng.o' failed
+make[1]: *** [.obj/libmng.o] Error 1
+make[1]: Leaving directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libmng'
+test libmng FAILED
+executing config test libtiff
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libtiff && /opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/qmake -spec /opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libtiff
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libtiff && make
+make[1]: Entering directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libtiff'
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -o .obj/libtiff.o libtiff.cpp
+libtiff.cpp:34:20: error: tiffio.h: No such file or directory
+libtiff.cpp:42:6: error: #error "Required libtiff not found"
+libtiff.cpp: In function ‘int main(int, char**)’:
+libtiff.cpp:49: error: ‘tdata_t’ was not declared in this scope
+libtiff.cpp:49: error: expected `;' before ‘buffer’
+libtiff.cpp:50: error: ‘buffer’ was not declared in this scope
+libtiff.cpp:50: error: ‘_TIFFfree’ was not declared in this scope
+libtiff.cpp:54: error: ‘TIFFReadRGBAImageOriented’ was not declared in this scope
+Makefile:375: recipe for target '.obj/libtiff.o' failed
+make[1]: *** [.obj/libtiff.o] Error 1
+make[1]: Leaving directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libtiff'
+test libtiff FAILED
+executing config test libwebp
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libwebp && /opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/qmake -spec /opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libwebp
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libwebp && make
+make[1]: Entering directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libwebp'
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -o .obj/libwebp.o libwebp.cpp
+libwebp.cpp:34:25: error: webp/decode.h: No such file or directory
+libwebp.cpp:35:25: error: webp/encode.h: No such file or directory
+libwebp.cpp:37:29: error: missing binary operator before token "("
+libwebp.cpp: In function ‘int main(int, char**)’:
+libwebp.cpp:43: error: ‘WebPDecoderConfig’ was not declared in this scope
+libwebp.cpp:43: error: expected `;' before ‘config’
+libwebp.cpp:44: error: ‘WebPDecBuffer’ was not declared in this scope
+libwebp.cpp:44: error: ‘output_buffer’ was not declared in this scope
+libwebp.cpp:44: error: ‘config’ was not declared in this scope
+libwebp.cpp:45: error: ‘WebPBitstreamFeatures’ was not declared in this scope
+libwebp.cpp:45: error: ‘bitstream’ was not declared in this scope
+libwebp.cpp:46: error: ‘WebPPicture’ was not declared in this scope
+libwebp.cpp:46: error: expected `;' before ‘picture’
+libwebp.cpp:47: error: ‘picture’ was not declared in this scope
+libwebp.cpp:48: error: ‘WebPConfig’ was not declared in this scope
+libwebp.cpp:48: error: expected `;' before ‘config2’
+libwebp.cpp:49: error: ‘config2’ was not declared in this scope
+Makefile:375: recipe for target '.obj/libwebp.o' failed
+make[1]: *** [.obj/libwebp.o] Error 1
+make[1]: Leaving directory '/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/config.tests/libwebp'
+test libwebp FAILED

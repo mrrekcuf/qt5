@@ -1,0 +1,32 @@
+executing config test bluez
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/bluez && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/bluez
+Project ERROR: bluez development package not found
+test bluez FAILED
+executing config test bluez_le
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/bluez_le && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/bluez_le
+Project ERROR: bluez development package not found
+test bluez_le FAILED
+executing config test btapi10_2_1
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/btapi10_2_1 && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/btapi10_2_1
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/btapi10_2_1 && make
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ -o .obj/main.o main.cpp
+main.cpp:34:28: error: btapi/btdevice.h: No such file or directory
+main.cpp:36: error: variable or field ‘callback’ declared void
+main.cpp:36: error: ‘bt_sdp_list_t’ was not declared in this scope
+main.cpp:36: error: ‘result’ was not declared in this scope
+main.cpp:36: error: expected primary-expression before ‘void’
+main.cpp:36: error: ‘uint8_t’ was not declared in this scope
+main.cpp: In function ‘int main()’:
+main.cpp:43: error: ‘callback’ was not declared in this scope
+main.cpp:43: error: ‘bt_rdev_sdp_search_async’ was not declared in this scope
+Makefile:625: recipe for target '.obj/main.o' failed
+make: *** [.obj/main.o] Error 1
+test btapi10_2_1 FAILED
+executing config test libbb2
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/libbb2 && /opt/qt.palm/runtime/bin/bin/qmake -spec /opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/libbb2
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/config.tests/libbb2 && make
+arm-none-linux-gnueabi-g++ -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp --sysroot=/opt/PalmPDK/arm-gcc/sysroot -c -pipe --sysroot=/opt/PalmPDK/arm-gcc/sysroot -O2 -fno-exceptions -Wall -W -fPIC -DQT_NO_MTDEV -DQT_NO_LIBUDEV -DQT_NO_EVDEV -DQT_NO_TSLIB -DQT_NO_LIBINPUT -DQT_NO_PRINTER -DQT_NO_PRINTPREVIEWDIALOG -DQT_NO_PRINTDIALOG -DQT_NO_EXCEPTIONS -I. -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt.palm/qtbase/runtime/bin/mkspecs/linux-arm-gnueabi-g++ -o .obj/main.o main.cpp
+main.cpp:34:25: error: bb2/bb/Global: No such file or directory
+Makefile:625: recipe for target '.obj/main.o' failed
+make: *** [.obj/main.o] Error 1
+test libbb2 FAILED

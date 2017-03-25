@@ -1,0 +1,93 @@
+
+   Configure summary
+
+Building on:   linux-g++ (i386, CPU features: none detected)
+Building for:  linux-arm-gnueabi-g++ (arm, CPU features: neon)
+
+qmake vars .......... styles += mac fusion windows DEFINES += QT_NO_MTDEV DEFINES += QT_NO_LIBUDEV DEFINES += QT_NO_EVDEV DEFINES += QT_NO_TSLIB DEFINES += QT_NO_LIBINPUT DEFINES +=  "QT_NO_PRINTER" "QT_NO_PRINTPREVIEWDIALOG" "QT_NO_PRINTDIALOG" INCLUDEPATH +=  "/opt/PalmPDK/include" "/opt/PalmPDK/include/openssl" "/opt/PalmPDK/include/openpng12" "/opt/PalmPDK/include/GLES" "/opt/PalmPDK/include/GLES2" "/opt/PalmPDK/include/SDL" "/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include" "/opt/dbus/runtime/include" "/opt/expat/runtime/include" LIBS +=  -L"/opt/PalmPDK/device/lib" -L"/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib" -l"stdc++" -l"m" sql-drivers =  sql-plugins =  sqlite qmake switches ......... 
+
+Build options:
+  Configuration .......... alsa audio-backend clock-gettime clock-monotonic concurrent cross_compile full-config getaddrinfo getifaddrs iconv inotify ipv6ifname large-config linuxfb medium-config minimal-config mremap neon no-harfbuzz opengl opengles2 openssl pcre png posix_fallocate qpa qpa reduce_exports release shared small-config system-freetype system-jpeg system-png system-zlib 
+  Build parts ............  tools libs
+  Mode ................... release
+  Using sanitizer(s)...... none
+  Using C++11 ............ no
+  Using gold linker....... no
+  Using new DTAGS ........ no
+  Using PCH .............. no
+  Target compiler supports:
+    Neon ................. yes
+
+Qt modules and options:
+  Qt D-Bus ............... no
+  Qt Concurrent .......... yes
+  Qt GUI ................. yes
+  Qt Widgets ............. yes
+  Large File ............. no
+  QML debugging .......... no
+  Use system proxies ..... no
+
+Support enabled for:
+  Accessibility .......... no
+  ALSA ................... yes
+  CUPS ................... no
+  Evdev .................. no
+  FontConfig ............. no
+  FreeType ............... yes (system library)
+  Glib ................... no
+  GStreamer .............. no
+  GTK theme .............. no
+  HarfBuzz ............... no
+  Iconv .................. yes
+  ICU .................... no
+  Image formats: 
+    GIF .................. yes (plugin, using bundled copy)
+    JPEG ................. yes (plugin, using system library)
+    PNG .................. yes (in QtGui, using system library)
+  journald ............... no
+  libinput................ no
+  mtdev .................. no
+  Networking: 
+    getaddrinfo .......... yes
+    getifaddrs ........... yes
+    IPv6 ifname .......... yes
+    libproxy.............. no
+    OpenSSL .............. yes (loading libraries at run-time)
+  NIS .................... no
+  OpenGL / OpenVG: 
+    EGL .................. no
+    OpenGL ............... yes (OpenGL ES 2.0+)
+    OpenVG ............... no
+  PCRE ................... yes (bundled copy)
+  pkg-config ............. yes 
+  PulseAudio ............. no
+  QPA backends: 
+    DirectFB ............. no
+    EGLFS ................ no
+      EGLFS i.MX6....... . no
+      EGLFS KMS .......... no
+      EGLFS Mali ......... no
+      EGLFS Raspberry Pi . no
+      EGLFS X11 .......... no
+    LinuxFB .............. yes
+    XCB .................. no
+  Session management ..... no
+  SQL drivers: 
+    DB2 .................. no
+    InterBase ............ no
+    MySQL ................ no
+    OCI .................. no
+    ODBC ................. no
+    PostgreSQL ........... no
+    SQLite 2 ............. no
+    SQLite ............... yes (plugin, using bundled copy)
+    TDS .................. no
+  tslib .................. no
+  udev ................... no
+  xkbcommon-x11........... no
+  xkbcommon-evdev......... no
+  zlib ................... yes (system library)
+
+
+NOTE: Qt is using double for qreal on this system. This is binary incompatible against Qt 5.1.
+Configure with '-qreal float' to create a build that is binary compatible with 5.1.

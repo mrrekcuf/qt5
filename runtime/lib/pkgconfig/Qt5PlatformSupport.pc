@@ -1,0 +1,14 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 PlatformSupport
+Description: Qt PlatformSupport module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5PlatformSupport 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -lfreetype -L/opt/qt.palm/qtbase/runtime/lib -lQt5Gui -lQt5Core -lstdc++ -lm -lpthread -lGLESv2  
+Cflags: -I${includedir}/QtPlatformSupport -I${includedir}
+Requires: Qt5Core Qt5Gui
+

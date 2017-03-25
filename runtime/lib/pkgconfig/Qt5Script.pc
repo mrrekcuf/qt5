@@ -1,0 +1,14 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Script
+Description: Qt Script module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5Script 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib /opt/qt-everywhere-opensource-src-5.5.1/qtscript/src/script/liblinux-atomic.a -L/opt/qt.palm/qtbase/runtime/lib -lQt5Core -lstdc++ -lm -lpthread   
+Cflags: -I${includedir}/QtScript -I${includedir}
+Requires: Qt5Core
+

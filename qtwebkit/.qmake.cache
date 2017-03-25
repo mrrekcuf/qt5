@@ -1,0 +1,102 @@
+CONFIG += done_config_fontconfig
+CONFIG += config_gccdepends
+CONFIG += done_config_gccdepends
+CONFIG += done_config_glx
+CONFIG += config_gnuld
+CONFIG += done_config_gnuld
+CONFIG += done_config_icu
+CONFIG += done_config_leveldb
+CONFIG += done_config_libwebp
+CONFIG += done_config_libXcomposite
+CONFIG += done_config_libxml2
+CONFIG += done_config_libXrender
+CONFIG += done_config_libxslt
+CONFIG += config_libzlib
+CONFIG += done_config_libzlib
+CONFIG += webkit_configured
+
+# Configuration changed Sun Jul 17 15:49:35 2016
+WEBKIT_CONFIG = \
+    3d_rendering \
+    blob \
+    canvas_path \
+    channel_messaging \
+    css_box_decoration_break \
+    css_compositing \
+    css_exclusions \
+    css_filters \
+    css_image_set \
+    css_regions \
+    css_shapes \
+    css_sticky_position \
+    css_transforms_animations_unprefixed \
+    datalist_element \
+    details_element \
+    download_attribute \
+    fast_mobile_scrolling \
+    filters \
+    ftpdir \
+    fullscreen_api \
+    gesture_events \
+    icondatabase \
+    iframe_seamless \
+    indexed_database \
+    input_type_color \
+    inspector \
+    inspector_server \
+    javascript_debugger \
+    legacy_notifications \
+    legacy_viewport_adaption \
+    legacy_vendor_prefixes \
+    legacy_web_audio \
+    link_prefetch \
+    meter_element \
+    mhtml \
+    notifications \
+    page_visibility_api \
+    progress_element \
+    resolution_media_query \
+    request_animation_frame \
+    shared_workers \
+    smooth_scrolling \
+    sql_database \
+    subpixel_layout \
+    svg \
+    svg_fonts \
+    touch_adjustment \
+    touch_events \
+    view_mode_css_media \
+    web_sockets \
+    web_timing \
+    workers \
+    xhr_timeout \
+    use_tiled_backing_store \
+    use_cross_platform_context_menus \
+    have_qtprintsupport \
+    have_qstyle \
+    have_qttestlib \
+    use_zlib \
+    use_libpng \
+    plugin_architecture_unsupported \
+    gamepad \
+    touch_slider \
+    use_leveldb \
+    use_wchar_unicode \
+    build_webkit1
+
+# Configuration changed Tue Jul 19 02:25:22 2016
+WEBKIT_CONFIG += use_libjpeg
+
+# Configuration changed Tue Jan 24 03:29:30 2017
+WEBKIT_CONFIG += \
+    video_track \
+    video \
+    use_qt_multimedia
+
+# Configuration changed Mon Feb 13 00:48:34 2017
+WEBKIT_CONFIG += \
+    accelerated_2d_canvas \
+    have_qtquick \
+    use_3d_graphics \
+    webgl \
+    build_webkit2

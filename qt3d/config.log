@@ -1,0 +1,4 @@
+executing config test assimp
++ cd /opt/qt-everywhere-opensource-src-5.5.1/qt3d/config.tests/assimp && /opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/qmake -spec /opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ "CONFIG -= qt debug_and_release app_bundle lib_bundle" /opt/qt-everywhere-opensource-src-5.5.1/qt3d/config.tests/assimp
+Project ERROR: assimp development package not found
+test assimp FAILED

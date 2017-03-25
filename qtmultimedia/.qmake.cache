@@ -1,0 +1,5 @@
+CONFIG += config_openal
+CONFIG += done_config_openal
+CONFIG += done_config_alsa
+CONFIG += done_config_resourcepolicy
+CONFIG += done_config_gpu_vivante

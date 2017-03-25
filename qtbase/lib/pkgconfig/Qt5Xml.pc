@@ -1,0 +1,14 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Xml
+Description: Qt Xml module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5Xml 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5Core -lstdc++ -lm -lpthread   
+Cflags: -I${includedir}/QtXml -I${includedir}
+Requires: Qt5Core
+

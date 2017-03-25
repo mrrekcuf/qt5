@@ -1,0 +1,14 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 Help
+Description: Qt Help module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5Help 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5Widgets -lQt5Gui -lQt5Core -lpthread -lQt5Network -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5Sql -L/opt/qt-everywhere-opensource-src-5.5.1/qttools/lib -lQt5CLucene -lQt5Core -lpthread  
+Cflags: -I${includedir}/QtHelp -I${includedir}
+Requires: Qt5Core Qt5Gui Qt5Widgets
+

@@ -1,0 +1,4 @@
+CONFIG += done_config_bluez
+CONFIG += done_config_bluez_le
+CONFIG += done_config_btapi10_2_1
+CONFIG += done_config_libbb2

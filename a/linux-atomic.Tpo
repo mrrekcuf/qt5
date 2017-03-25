@@ -1,0 +1,1 @@
+linux-atomic.lo: linux-atomic.c

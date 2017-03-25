@@ -1,0 +1,14 @@
+prefix=/opt/qt.palm/qtbase/runtime
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+
+Name: Qt5 MultimediaWidgets
+Description: Qt MultimediaWidgets module
+Version: 5.5.1
+Libs: -L${libdir} -lQt5MultimediaWidgets 
+Libs.private: -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt.palm/qtbase/runtime/lib -lQt5Multimedia -L/opt/qt.palm/qtbase/runtime/lib -lQt5Widgets -lQt5Gui -lQt5Network -lQt5Core -lstdc++ -lm -lpthread -lQt5OpenGL -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt.palm/qtbase/runtime/lib -lQt5Widgets -lQt5Gui -lQt5Core -lstdc++ -lm -lpthread -lGLESv2  
+Cflags: -I${includedir}/QtMultimediaWidgets -I${includedir}
+Requires: Qt5Core Qt5Gui Qt5Multimedia Qt5Widgets
+
