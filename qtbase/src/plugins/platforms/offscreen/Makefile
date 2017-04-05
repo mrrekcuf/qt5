@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = qoffscreen1.0.0
-DISTDIR = /opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702/.obj/qoffscreen1.0.0
+DISTDIR = /opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok/.obj/qoffscreen1.0.0
 LINK          = arm-none-linux-gnueabi-g++ -Wl,--allow-shlib-undefined
 LFLAGS        = --sysroot=/opt/PalmPDK/arm-gcc/sysroot -Wl,--no-undefined -Wl,-O1 -shared
 LIBS          = $(SUBLIBS) -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -lSDL -lpdl -ldl -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5Widgets -lQt5PlatformSupport -lfreetype -lQt5Gui -lQt5Core -lstdc++ -lm -lGLESv2 -lpthread 
@@ -971,7 +971,7 @@ compiler_moc_header_clean:
 		../../../corelib/kernel/qobject_impl.h \
 		../../../../include/QtCore/QMutex \
 		sdlscreen_private.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include sdlscreen_private.h -o .moc/moc_sdlscreen_private.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include sdlscreen_private.h -o .moc/moc_sdlscreen_private.cpp
 
 .moc/moc_sdlscreenthread.cpp: ../../../../include/QtCore/QThread \
 		../../../../include/QtCore/qthread.h \
@@ -1081,7 +1081,7 @@ compiler_moc_header_clean:
 		../../../../include/QtCore/qobject_impl.h \
 		../../../corelib/kernel/qobject_impl.h \
 		sdlscreenthread.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include sdlscreenthread.h -o .moc/moc_sdlscreenthread.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include sdlscreenthread.h -o .moc/moc_sdlscreenthread.cpp
 
 .moc/moc_palmpremouse_private.cpp: /opt/PalmPDK/include/SDL/SDL.h \
 		/opt/PalmPDK/include/SDL/SDL_main.h \
@@ -1225,7 +1225,7 @@ compiler_moc_header_clean:
 		../../../../include/QtCore/qpoint.h \
 		../../../corelib/tools/qpoint.h \
 		palmpremouse_private.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include palmpremouse_private.h -o .moc/moc_palmpremouse_private.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include palmpremouse_private.h -o .moc/moc_palmpremouse_private.cpp
 
 .moc/moc_dlgsymbols.cpp: ../../../../include/QtWidgets/QWidget \
 		../../../../include/QtWidgets/qwidget.h \
@@ -1431,7 +1431,7 @@ compiler_moc_header_clean:
 		../../../../include/QtGui/qtouchdevice.h \
 		../../../gui/kernel/qtouchdevice.h \
 		dlgsymbols.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include dlgsymbols.h -o .moc/moc_dlgsymbols.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include dlgsymbols.h -o .moc/moc_dlgsymbols.cpp
 
 .moc/moc_palmprekeyboard_private.cpp: ../../../../include/QtCore/QSocketNotifier \
 		../../../../include/QtCore/qsocketnotifier.h \
@@ -1567,7 +1567,7 @@ compiler_moc_header_clean:
 		/opt/PalmPDK/include/SDL/SDL_timer.h \
 		/opt/PalmPDK/include/SDL/SDL_version.h \
 		palmprekeyboard_private.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include palmprekeyboard_private.h -o .moc/moc_palmprekeyboard_private.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include palmprekeyboard_private.h -o .moc/moc_palmprekeyboard_private.cpp
 
 .moc/moc_symbolbutton.cpp: ../../../../include/QtWidgets/QPushButton \
 		../../../../include/QtWidgets/qpushbutton.h \
@@ -1779,7 +1779,7 @@ compiler_moc_header_clean:
 		../../../../include/QtGui/qtouchdevice.h \
 		../../../gui/kernel/qtouchdevice.h \
 		symbolbutton.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include symbolbutton.h -o .moc/moc_symbolbutton.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include symbolbutton.h -o .moc/moc_symbolbutton.cpp
 
 compiler_moc_source_make_all: .moc/main.moc
 compiler_moc_source_clean:
@@ -1995,7 +1995,7 @@ compiler_moc_source_clean:
 		../../../../include/QtGui/qopenglversionfunctions.h \
 		../../../gui/opengl/qopenglversionfunctions.h \
 		main.cpp
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.201702 -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include main.cpp -o .moc/main.moc
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/offscreen.ok -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtWidgets -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include main.cpp -o .moc/main.moc
 
 compiler_uic_make_all:
 compiler_uic_clean:
@@ -2438,9 +2438,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../gui/kernel/qplatformopenglcontext.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformsurface.h \
 		../../../gui/kernel/qplatformsurface.h \
-		/opt/PalmPDK/include/EGL/egl.h \
-		/opt/PalmPDK/include/EGL/eglplatform.h \
-		/opt/PalmPDK/include/KHR/khrplatform.h \
 		qoffscreencommon.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformdrag.h \
 		../../../gui/kernel/qplatformdrag.h \
@@ -2664,8 +2661,7 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qevdevtouchmanager_p.h \
 		../../../platformsupport/input/evdevtouch/qevdevtouchmanager_p.h \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qtslib_p.h \
-		../../../platformsupport/input/tslib/qtslib_p.h \
-		../../../../include/QtGui/QOpenGLContext
+		../../../platformsupport/input/tslib/qtslib_p.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/qoffscreenintegration.o qoffscreenintegration.cpp
 
 .obj/qoffscreenwindow.o: qoffscreenwindow.cpp qoffscreenwindow.h \
@@ -2857,9 +2853,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../gui/kernel/qplatformopenglcontext.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformsurface.h \
 		../../../gui/kernel/qplatformsurface.h \
-		/opt/PalmPDK/include/EGL/egl.h \
-		/opt/PalmPDK/include/EGL/eglplatform.h \
-		/opt/PalmPDK/include/KHR/khrplatform.h \
 		qoffscreencommon.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformdrag.h \
 		../../../gui/kernel/qplatformdrag.h \
@@ -3221,9 +3214,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		sdlscreen_private.h \
 		../../../../include/QtCore/QMutex \
 		qoffscreenwindow.h \
-		/opt/PalmPDK/include/EGL/egl.h \
-		/opt/PalmPDK/include/EGL/eglplatform.h \
-		/opt/PalmPDK/include/KHR/khrplatform.h \
 		../../../../include/QtGui/5.5.1/QtGui/private/qpixmap_raster_p.h \
 		../../../gui/image/qpixmap_raster_p.h \
 		../../../../include/QtGui/5.5.1/QtGui/private/qguiapplication_p.h \
@@ -3689,13 +3679,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		/opt/PalmPDK/include/SDL/SDL_loadso.h \
 		/opt/PalmPDK/include/SDL/SDL_timer.h \
 		/opt/PalmPDK/include/SDL/SDL_version.h \
-		/opt/PalmPDK/include/PDL.h \
-		/opt/PalmPDK/include/PDL_types.h \
-		/opt/PalmPDK/include/PDL_Services.h \
-		/opt/PalmPDK/include/PDL_JS.h \
-		/opt/PalmPDK/include/PDL_Purchase.h \
-		/opt/PalmPDK/include/PDL_Sensors.h \
-		/opt/PalmPDK/include/PDL_deprecated.h \
 		sdlscreenthread.h \
 		../../../../include/QtCore/QThread \
 		../../../../include/QtCore/qthread.h \
@@ -3822,106 +3805,36 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../corelib/tools/qpoint.h \
 		palmprekeyboard.h \
 		palmprekeyboard_private.h \
-		dlgsymbols.h \
-		../../../../include/QtWidgets/QWidget \
-		../../../../include/QtWidgets/qwidget.h \
-		../../../widgets/kernel/qwidget.h \
-		../../../../include/QtGui/qwindowdefs.h \
-		../../../gui/kernel/qwindowdefs.h \
-		../../../../include/QtGui/qwindowdefs_win.h \
-		../../../gui/kernel/qwindowdefs_win.h \
-		../../../../include/QtCore/qmargins.h \
-		../../../corelib/tools/qmargins.h \
-		../../../../include/QtGui/qpaintdevice.h \
-		../../../gui/painting/qpaintdevice.h \
-		../../../../include/QtCore/qrect.h \
-		../../../corelib/tools/qrect.h \
-		../../../../include/QtCore/qsize.h \
-		../../../corelib/tools/qsize.h \
-		../../../../include/QtGui/qpalette.h \
-		../../../gui/kernel/qpalette.h \
-		../../../../include/QtGui/qcolor.h \
-		../../../gui/painting/qcolor.h \
-		../../../../include/QtGui/qrgb.h \
-		../../../gui/painting/qrgb.h \
-		../../../../include/QtGui/qbrush.h \
-		../../../gui/painting/qbrush.h \
-		../../../../include/QtCore/qpair.h \
-		../../../corelib/tools/qpair.h \
-		../../../../include/QtCore/qvector.h \
-		../../../corelib/tools/qvector.h \
-		../../../../include/QtGui/qmatrix.h \
-		../../../gui/painting/qmatrix.h \
-		../../../../include/QtGui/qpolygon.h \
-		../../../gui/painting/qpolygon.h \
-		../../../../include/QtGui/qregion.h \
-		../../../gui/painting/qregion.h \
-		../../../../include/QtCore/qdatastream.h \
-		../../../corelib/io/qdatastream.h \
-		../../../../include/QtCore/qiodevice.h \
-		../../../corelib/io/qiodevice.h \
-		../../../../include/QtCore/qline.h \
-		../../../corelib/tools/qline.h \
-		../../../../include/QtGui/qtransform.h \
-		../../../gui/painting/qtransform.h \
-		../../../../include/QtGui/qpainterpath.h \
-		../../../gui/painting/qpainterpath.h \
-		../../../../include/QtGui/qimage.h \
-		../../../gui/image/qimage.h \
-		../../../../include/QtGui/qpixelformat.h \
-		../../../gui/kernel/qpixelformat.h \
-		../../../../include/QtGui/qpixmap.h \
-		../../../gui/image/qpixmap.h \
-		../../../../include/QtCore/qsharedpointer.h \
-		../../../corelib/tools/qsharedpointer.h \
-		../../../../include/QtCore/qshareddata.h \
-		../../../corelib/tools/qshareddata.h \
-		../../../../include/QtCore/qhash.h \
-		../../../corelib/tools/qhash.h \
-		../../../../include/QtCore/qsharedpointer_impl.h \
-		../../../corelib/tools/qsharedpointer_impl.h \
-		../../../../include/QtGui/qfont.h \
-		../../../gui/text/qfont.h \
-		../../../../include/QtGui/qfontmetrics.h \
-		../../../gui/text/qfontmetrics.h \
-		../../../../include/QtGui/qfontinfo.h \
-		../../../gui/text/qfontinfo.h \
-		../../../../include/QtWidgets/qsizepolicy.h \
-		../../../widgets/kernel/qsizepolicy.h \
-		../../../../include/QtGui/qcursor.h \
-		../../../gui/kernel/qcursor.h \
-		../../../../include/QtGui/qkeysequence.h \
-		../../../gui/kernel/qkeysequence.h \
-		../../../../include/QtGui/qevent.h \
-		../../../gui/kernel/qevent.h \
-		../../../../include/QtCore/qvariant.h \
-		../../../corelib/kernel/qvariant.h \
-		../../../../include/QtCore/qmap.h \
-		../../../corelib/tools/qmap.h \
+		../../../../include/QtCore/QDebug \
 		../../../../include/QtCore/qdebug.h \
 		../../../corelib/io/qdebug.h \
+		../../../../include/QtCore/qhash.h \
+		../../../corelib/tools/qhash.h \
+		../../../../include/QtCore/qpair.h \
+		../../../corelib/tools/qpair.h \
+		../../../../include/QtCore/qmap.h \
+		../../../corelib/tools/qmap.h \
 		../../../../include/QtCore/qtextstream.h \
 		../../../corelib/io/qtextstream.h \
+		../../../../include/QtCore/qiodevice.h \
+		../../../corelib/io/qiodevice.h \
 		../../../../include/QtCore/qlocale.h \
 		../../../corelib/tools/qlocale.h \
+		../../../../include/QtCore/qvariant.h \
+		../../../corelib/kernel/qvariant.h \
+		../../../../include/QtCore/qshareddata.h \
+		../../../corelib/tools/qshareddata.h \
+		../../../../include/QtCore/qvector.h \
+		../../../corelib/tools/qvector.h \
 		../../../../include/QtCore/qset.h \
 		../../../corelib/tools/qset.h \
 		../../../../include/QtCore/qcontiguouscache.h \
 		../../../corelib/tools/qcontiguouscache.h \
-		../../../../include/QtCore/qurl.h \
-		../../../corelib/io/qurl.h \
-		../../../../include/QtCore/qurlquery.h \
-		../../../corelib/io/qurlquery.h \
+		../../../../include/QtCore/QFile \
 		../../../../include/QtCore/qfile.h \
 		../../../corelib/io/qfile.h \
 		../../../../include/QtCore/qfiledevice.h \
 		../../../corelib/io/qfiledevice.h \
-		../../../../include/QtGui/qvector2d.h \
-		../../../gui/math3d/qvector2d.h \
-		../../../../include/QtGui/qtouchdevice.h \
-		../../../gui/kernel/qtouchdevice.h \
-		../../../../include/QtCore/QDebug \
-		../../../../include/QtCore/QFile \
 		../../../../include/QtCore/QHash \
 		../../../../include/QtCore/QDateTime \
 		../../../../include/QtCore/qdatetime.h \
@@ -4175,9 +4088,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		sdlscreen_private.h \
 		../../../../include/QtCore/QMutex \
 		qoffscreenwindow.h \
-		/opt/PalmPDK/include/EGL/egl.h \
-		/opt/PalmPDK/include/EGL/eglplatform.h \
-		/opt/PalmPDK/include/KHR/khrplatform.h \
 		palmpremouse.h \
 		palmpremouse_private.h \
 		../../../../include/QtCore/QSocketNotifier \
@@ -4280,40 +4190,7 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../../include/QtGui/QCursor
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/palmpremouse.o palmpremouse.cpp
 
-.obj/palmprekeyboard.o: palmprekeyboard.cpp /opt/PalmPDK/include/PDL.h \
-		/opt/PalmPDK/include/PDL_types.h \
-		/opt/PalmPDK/include/SDL/SDL_keysym.h \
-		/opt/PalmPDK/include/SDL/SDL_stdinc.h \
-		/opt/PalmPDK/include/SDL/SDL_config.h \
-		/opt/PalmPDK/include/SDL/SDL_platform.h \
-		/opt/PalmPDK/include/SDL/begin_code.h \
-		/opt/PalmPDK/include/SDL/close_code.h \
-		/opt/PalmPDK/include/PDL_Services.h \
-		/opt/PalmPDK/include/PDL_JS.h \
-		/opt/PalmPDK/include/SDL/SDL.h \
-		/opt/PalmPDK/include/SDL/SDL_main.h \
-		/opt/PalmPDK/include/SDL/SDL_audio.h \
-		/opt/PalmPDK/include/SDL/SDL_error.h \
-		/opt/PalmPDK/include/SDL/SDL_endian.h \
-		/opt/PalmPDK/include/SDL/SDL_mutex.h \
-		/opt/PalmPDK/include/SDL/SDL_thread.h \
-		/opt/PalmPDK/include/SDL/SDL_rwops.h \
-		/opt/PalmPDK/include/SDL/SDL_cdrom.h \
-		/opt/PalmPDK/include/SDL/SDL_cpuinfo.h \
-		/opt/PalmPDK/include/SDL/SDL_events.h \
-		/opt/PalmPDK/include/SDL/SDL_active.h \
-		/opt/PalmPDK/include/SDL/SDL_keyboard.h \
-		/opt/PalmPDK/include/SDL/SDL_mouse.h \
-		/opt/PalmPDK/include/SDL/SDL_video.h \
-		/opt/PalmPDK/include/SDL/SDL_joystick.h \
-		/opt/PalmPDK/include/SDL/SDL_quit.h \
-		/opt/PalmPDK/include/SDL/SDL_loadso.h \
-		/opt/PalmPDK/include/SDL/SDL_timer.h \
-		/opt/PalmPDK/include/SDL/SDL_version.h \
-		/opt/PalmPDK/include/PDL_Purchase.h \
-		/opt/PalmPDK/include/PDL_Sensors.h \
-		/opt/PalmPDK/include/PDL_deprecated.h \
-		palmprekeyboard.h \
+.obj/palmprekeyboard.o: palmprekeyboard.cpp palmprekeyboard.h \
 		../../../../include/QtCore/QSocketNotifier \
 		../../../../include/QtCore/qsocketnotifier.h \
 		../../../corelib/kernel/qsocketnotifier.h \
@@ -4422,6 +4299,32 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../../include/QtCore/qobject_impl.h \
 		../../../corelib/kernel/qobject_impl.h \
 		palmprekeyboard_private.h \
+		/opt/PalmPDK/include/SDL/SDL.h \
+		/opt/PalmPDK/include/SDL/SDL_main.h \
+		/opt/PalmPDK/include/SDL/SDL_stdinc.h \
+		/opt/PalmPDK/include/SDL/SDL_config.h \
+		/opt/PalmPDK/include/SDL/SDL_platform.h \
+		/opt/PalmPDK/include/SDL/begin_code.h \
+		/opt/PalmPDK/include/SDL/close_code.h \
+		/opt/PalmPDK/include/SDL/SDL_audio.h \
+		/opt/PalmPDK/include/SDL/SDL_error.h \
+		/opt/PalmPDK/include/SDL/SDL_endian.h \
+		/opt/PalmPDK/include/SDL/SDL_mutex.h \
+		/opt/PalmPDK/include/SDL/SDL_thread.h \
+		/opt/PalmPDK/include/SDL/SDL_rwops.h \
+		/opt/PalmPDK/include/SDL/SDL_cdrom.h \
+		/opt/PalmPDK/include/SDL/SDL_cpuinfo.h \
+		/opt/PalmPDK/include/SDL/SDL_events.h \
+		/opt/PalmPDK/include/SDL/SDL_active.h \
+		/opt/PalmPDK/include/SDL/SDL_keyboard.h \
+		/opt/PalmPDK/include/SDL/SDL_keysym.h \
+		/opt/PalmPDK/include/SDL/SDL_mouse.h \
+		/opt/PalmPDK/include/SDL/SDL_video.h \
+		/opt/PalmPDK/include/SDL/SDL_joystick.h \
+		/opt/PalmPDK/include/SDL/SDL_quit.h \
+		/opt/PalmPDK/include/SDL/SDL_loadso.h \
+		/opt/PalmPDK/include/SDL/SDL_timer.h \
+		/opt/PalmPDK/include/SDL/SDL_version.h \
 		qoffscreencommon.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformbackingstore.h \
 		../../../gui/painting/qplatformbackingstore.h \

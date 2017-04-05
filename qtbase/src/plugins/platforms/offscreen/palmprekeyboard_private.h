@@ -34,7 +34,7 @@ public:
         Down,
         Locked
     };
-    
+
 public:
 /////    PalmPreKeyboard_private ( PalmPreKeyboard* keyboardHandler, SDLScreen* screen, bool showDebugInfo );
     PalmPreKeyboard_private ( PalmPreKeyboard* keyboardHandler, SDLScreen_private* screen, bool showDebugInfo );
@@ -60,8 +60,6 @@ public:
     QSocketNotifier* _sn;
 
     PalmKeyState _shift, _square, _symbol;
-    bool kbShow ;  // for onscreen kb
-    
 };
 
 

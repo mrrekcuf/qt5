@@ -8,12 +8,14 @@
 //
 // DISCLAIMER: This software is released AS-IS with ABSOLUTELY NO WARRANTY OF
 // ANY KIND.
-#include <PDL.h>
-
 
 #include <fcntl.h>
 #include <linux/input.h>
 #include <errno.h>
+
+#include <SDL/SDL.h>
+
+
 
 #include "palmprekeyboard.h"
 #include "palmprekeyboard_private.h"
@@ -33,6 +35,11 @@ extern QWindow *activeWindow;
 
 #include <syslog.h>
 #define SYSLOG(...) syslog(__VA_ARGS__)
+
+
+Uint32 last_timeK ;
+Uint32 lap_timeK ;
+#define SHORTKEYPRESS	300
 
 
 /////PalmPreKeyboard::PalmPreKeyboard ( SDLScreen* screen, bool showDebugInfo ) : QObject()  /////    : QEvdevKeyboardHandler(QString())
@@ -90,8 +97,6 @@ qDebug() << "PalmPreKeyboard_private::PalmPreKeyboard_private()" ;
 
     _dlgSymbols = NULL;
 
-    kbShow = false ;
-    
 /****
 SYSLOG(LOG_ERR, "/dev/input/keypad0");        
 /////    _fd = open("/dev/input/keypad0", O_RDONLY );
@@ -141,9 +146,7 @@ void PalmPreKeyboard_private::symbolDialogHidden()
 }
 
 
-
-
-////// not use
+//// no use
 void PalmPreKeyboard_private::activity ()
 {
 /////qDebug() << "PalmPreKeyboard_private::activity ( int )" ;
@@ -180,24 +183,21 @@ qDebug("Event type %02d, code %d, value %02d", in.type, in.code, in.value);
                     // launch symbol window
                     if (!_dlgSymbols)
                     {
-qDebug("if (!_dlgSymbols)");                    
                         _dlgSymbols = new dlgSymbols(_screen);
                         connect(_dlgSymbols, SIGNAL(hidden()), this, SLOT(symbolDialogHidden()));
-/////                        QTimer::singleShot(1, _dlgSymbols, SLOT(show()));
+                        QTimer::singleShot(1, _dlgSymbols, SLOT(show()));
                     }
 
                     _dlgSymbols->show();
                 }
                 else
-                {
                     _symbol = Up;
-                };
             }
             if (in.value == 0) {
                 _symbol = Up ;
             }
-////            if (_showDebugInfo)
-/////                qDebug("sym: %d", in.value);
+            if (_showDebugInfo)
+                qDebug("sym: %d", in.value);
         } else if (in.code == PalmPreKeyboard::Key_Square) {
             if (in.value == 1) {
                 if (_square == Up)
@@ -319,80 +319,148 @@ qDebug() << " PalmPreKeyboard_private::activity ( int )" << "Some other error oc
 
 
 
-
-
 void PalmPreKeyboard_private::processSDLKey(SDL_Event event)
 {
+
+
 /////qDebug() << "PalmPreKeyboard_private::processKey(SDL_Event event)" ;
 
     if ((event.type == SDL_KEYUP) ||
         (event.type == SDL_KEYDOWN)) 
-////    if (event.type == SDL_KEYDOWN) 
     {
     
-qDebug() << "PalmPreKeyboard_private::processSDLKey(SDL_Event event)" << event.type << event.key.keysym.sym << event.key.keysym.mod << event.key.keysym.unicode << event.key.keysym.scancode ;
+qDebug() << "PalmPreKeyboard_private::processKey(SDL_Event event)" << event.key.keysym.sym << event.key.keysym.mod << event.key.keysym.unicode;
+        if (event.type == SDL_KEYDOWN)        
+	    lap_timeK = SDL_GetTicks() - last_timeK ;
     
         // key event
         if (event.key.keysym.sym == SDLK_RCTRL) {  ///symbol
-            if (event.type == SDL_KEYUP) {
-////                if (_symbol == Up) {
-////                    _symbol = Down;
+        
+            if (event.type == SDL_KEYDOWN) 
+            {
+
+		if (lap_timeK < SHORTKEYPRESS *2 && _symbol == Down) 
+	    	{
+                    _symbol = Locked;        	    
+                    
+                    // launch symbol window
+                    if (!_dlgSymbols)
+                    {
+                        _dlgSymbols = new dlgSymbols(_screen);
+                        connect(_dlgSymbols, SIGNAL(hidden()), this, SLOT(symbolDialogHidden()));
+                        QTimer::singleShot(1, _dlgSymbols, SLOT(show()));
+                    };
+                    _dlgSymbols->show();
+    
+                }
+		else            
+                {                
+                    if (_dlgSymbols)
+                    {
+                        _dlgSymbols->hide();
+                    };
+
+                
+                    if (_symbol==Locked) 
+                	_symbol = Up;
+            	    else
+                	_symbol = Down;
+                	
+	            last_timeK  = SDL_GetTicks();                    
+                };
+                
+    	    }            
+
+            
+/*****            
+                if (_symbol == Up) {
+                    _symbol = Down;
 
                     // launch symbol window
                     if (!_dlgSymbols)
                     {
-qDebug("if (!_dlgSymbols)");                    
-    
                         _dlgSymbols = new dlgSymbols(_screen);
-////                        connect(_dlgSymbols, SIGNAL(hidden()), this, SLOT(symbolDialogHidden()));
-////                        QTimer::singleShot(3, _dlgSymbols, SLOT(show()));
+                        connect(_dlgSymbols, SIGNAL(hidden()), this, SLOT(symbolDialogHidden()));
+                        QTimer::singleShot(1, _dlgSymbols, SLOT(show()));
                     }
-                    if (_dlgSymbols->_grabbed)
-                    {
-                        _dlgSymbols->hide(); 
-                    }
-                    else
-                    {
-                        _dlgSymbols->show();
-                    };
-////                }
-////                else
-////                    _symbol = Up;
-/////            }
-/////            if (event.type == SDL_KEYUP) {
-/////                _symbol = Up ;
-            }
-///            if (_showDebugInfo)
-/////                qDebug("sym: %d", in.value);
-        } else if (event.key.keysym.sym == SDLK_RALT) {  ////Key_Square
-            if (event.type == SDL_KEYDOWN) {
-                if (_square == Up)
-                    _square = Down;
-                else if (_square == Down)
-                    _square = Locked;
+
+                    _dlgSymbols->show();
+                }
                 else
-                    _square = Up;
+                    _symbol = Up;
             }
-/////            if ((event.type == SDL_KEYUP) && (_square != Locked)) {
-/////                _square = Up ;
-/////            }
-/////	    if (event.key.keysym.repeat) {
-/////                    _square = Locked;            
-/////	    }
+            if (event.type == SDL_KEYUP) {
+                _symbol = Up ;
+            }
+****/            
+            if (_showDebugInfo)
+                qDebug("sym: %d", _symbol);
+                
+        } else if (event.key.keysym.sym == SDLK_RALT) {  ////Key_Square
+        
+            if (event.type == SDL_KEYDOWN) 
+            {
+            
+		if (lap_timeK < SHORTKEYPRESS && _square == Down) 
+	    	{
+                    _square = Locked;        	    
+                }
+		else            
+                {                
+                    if (_square==Locked) 
+                	_square = Up;
+            	    else
+                	_square = Down;
+                	
+	            last_timeK  = SDL_GetTicks();                    
+                };
+            
+            };
+            
+            
+////            if ((event.type == SDL_KEYUP) && (_square != Locked)) {
+////                _square = Up ;
+////            }
+///            if (event.key.keysym.repeat) {
+//                _square = Locked;            
+///            }
 ////            if (in.value == 2) {
 ////                _square = Locked;
 ///            }
-/////            if (_showDebugInfo)
-qDebug("square: %d", _square);
+            if (_showDebugInfo)
+                qDebug("square: %d", _square);
+                
         } else if (event.key.keysym.sym == SDLK_LSHIFT) {  ///Key_Shift
-            if (event.type == SDL_KEYDOWN) {
-                if (_shift == Up)
-                    _shift = Down;
-                else if (_shift == Down)
-                    _shift = Locked;
-                else
-                    _shift = Up;
+        
+            if (event.type == SDL_KEYDOWN) 
+            {
+///////                if (_shift == Up)
+///////                    _shift = Down;
+///////                else if (_shift == Down)
+///////                    _shift = Locked;
+///////                else
+///////                    _shift = Up;
+
+		if (lap_timeK < SHORTKEYPRESS && _shift == Down) 
+	    	{
+                    _shift = Locked;        	    
+                }
+		else            
+                {                
+                    if (_shift==Locked) 
+                	_shift = Up;
+            	    else
+                	_shift = Down;
+                	
+	            last_timeK  = SDL_GetTicks();                    
+                };
+            
+
+
             }
+
+
+
 ////            if ((event.type == SDL_KEYUP) && (_shift != Locked)) {
     ///            _shift = Up;
     ////        }
@@ -403,12 +471,8 @@ qDebug("square: %d", _square);
 ///                _shift = Locked;
 ///            }
             
-////            if (_showDebugInfo)
-qDebug("shift: %d",_shift);
-        } else if (event.key.keysym.sym == 24 ) {  ///touchpad hide show keyboard
-        
-	    PDL_SetKeyboardState(PDL_FALSE);        
-                
+            if (_showDebugInfo)
+                qDebug("shift: %d",_shift);
         } else {
         
 /*******        
@@ -436,27 +500,22 @@ qDebug("shift: %d",_shift);
 
             } else 
 ******/                            
-            if (event.type == SDL_KEYUP) 
-            {
-
                 int key;
                 int unicode = 0;
 
                 if ((event.key.keysym.mod == 0) && (_square != Up))
                     key = keymap()->value(event.key.keysym.sym | PalmPreKeyboard::Key_SquareMask);
-                else if (event.key.keysym.mod == 512)
-            	    key = keymap()->value(event.key.keysym.sym | PalmPreKeyboard::Key_SquareMask);
                 else
                     key = keymap()->value(event.key.keysym.sym);
 ///                unicode = keymap()->value(event.key.keysym.sym); 
 
 ////                if ((key >= Qt::Key_A) && (key <= Qt::Key_Z)) { 
-		if ((event.key.keysym.mod == 0) && (_square == Up) && (event.key.keysym.sym >= SDLK_a) && (_shift == Up)) {
+		if ((event.key.keysym.mod == 0) && (_square == Up) && (event.key.keysym.sym >= SDLK_a) ) {
 ///                    // alpha key
-///                    if (_shift != Up)
-///                        unicode = key;
-///                    else
-                       unicode = key + 'a' - 'A';
+                    if (_shift != Up)
+                       unicode = key;
+                    else
+	               unicode = key + 'a' - 'A';
 ///                } else if (event.key.keysym.mod == KMOD_RALT) {
 ///                    unicode = keymap()->value(in.code | PalmPreKeyboard::Key_UnicodeMask | PalmPreKeyboard::Key_SquareMask);
 ///                    unicode = keymap()->value(event.key.keysym.sym);
@@ -480,22 +539,24 @@ qDebug() << "key = keymap()->value(event.key.keysym.sym) " << key << unicode ;
 ///QWindowSystemInterface::handleKeyEvent(0, QEvent::KeyPress, Qt::Key_A, Qt::NoModifier, QChar(key.keysym.sym), false, count ) ;
 ///QWindowSystemInterface::handleKeyEvent(0, QEvent::KeyRelease, Qt::Key_A, Qt::NoModifier, QChar(key.keysym.sym), false, count ) ;
 //if (event.key.keysym.sym < SDLK_NUMLOCK) 
-////{
+if (event.type == SDL_KEYDOWN) 
+{
 QWindowSystemInterface::handleKeyEvent(activeWindow, QEvent::KeyPress, key, (event.key.keysym.mod == KMOD_LSHIFT || _shift != Up) ? Qt::ShiftModifier :Qt::NoModifier, QChar(unicode), false  ) ;
 ///QWindowSystemInterface::handleKeyEvent(activeWindow, QEvent::KeyPress, key, (_shift != Up) ? Qt::ShiftModifier : Qt::NoModifier, QChar(unicode), false  ) ;
 ////QWindowSystemInterface::handleKeyEvent(0, QEvent::KeyRelease, key, (_shift != Up) ? Qt::ShiftModifier : Qt::NoModifier, QChar(unicode), (in.value == 2) ) ;
-/////};
+};
 
                 if (_shift == Down)
 	            _shift = Up;
-    	        if (_square == Down)
-        	    _square = Up;
-                
-qDebug("shift: %d",_shift);
-qDebug("square: %d", _square);
+	        if (_square == Down)
+                    _square = Up;
+                if (_symbol == Down)
+	            _symbol = Up;
 
-            } ;    
+
         }
+        
+        
     }
     
 //////    _sn->setEnabled(true);    
@@ -512,8 +573,6 @@ qDebug("square: %d", _square);
 
 KeyMap::KeyMap()
 {
-    insert(SDLK_TAB,       Qt::Key_Tab);
-
     insert(SDLK_AT,        Qt::Key_At);
     insert(SDLK_BACKSPACE, Qt::Key_Backspace);
     insert(SDLK_q,         Qt::Key_Q);
@@ -581,11 +640,6 @@ KeyMap::KeyMap()
     insert(SDLK_0,         Qt::Key_0);
 
 
-    insert(PalmPreKeyboard::Key_SquareMask | 18,    Qt::Key_Left);   // cursor left;		
-    insert(PalmPreKeyboard::Key_SquareMask | 19,    Qt::Key_Up);   // cursor up
-    insert(PalmPreKeyboard::Key_SquareMask | 20,    Qt::Key_Right);   // cursor right
-    insert(PalmPreKeyboard::Key_SquareMask | 21,    Qt::Key_Down);   // cursor down
-
     insert(PalmPreKeyboard::Key_SquareMask | SDLK_AT,    Qt::Key_0);
     insert(PalmPreKeyboard::Key_SquareMask | SDLK_BACKSPACE, Qt::Key_Backspace);
     insert(PalmPreKeyboard::Key_SquareMask | SDLK_q,         Qt::Key_Slash);
@@ -623,6 +677,7 @@ KeyMap::KeyMap()
 
     
 return ;
+
 
     insert(PalmPreKeyboard::Key_AtSign,    Qt::Key_At);
     insert(PalmPreKeyboard::Key_Backspace, Qt::Key_Backspace);

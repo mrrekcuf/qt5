@@ -62,28 +62,18 @@ QLinuxFbIntegration::QLinuxFbIntegration(const QStringList &paramList)
     : m_fontDb(new QGenericUnixFontDatabase),
       m_services(new QGenericUnixServices)
 {
-qDebug() << "QLinuxFbIntegration::QLinuxFbIntegration";
-
     m_primaryScreen = new QLinuxFbScreen(paramList);
 }
 
 QLinuxFbIntegration::~QLinuxFbIntegration()
 {
-qDebug() << "QLinuxFbIntegration::~QLinuxFbIntegration";
-
     destroyScreen(m_primaryScreen);
 }
 
 void QLinuxFbIntegration::initialize()
 {
-qDebug() << "QLinuxFbIntegration::initialize";
-
     if (m_primaryScreen->initialize())
-    {
         screenAdded(m_primaryScreen);
-qDebug() << "QLinuxFbIntegration::initialize screenAdded(m_primaryScreen) OK " ;
-        
-    }
     else
         qWarning("linuxfb: Failed to initialize screen");
 
@@ -99,8 +89,6 @@ qDebug() << "QLinuxFbIntegration::initialize screenAdded(m_primaryScreen) OK " ;
 
 bool QLinuxFbIntegration::hasCapability(QPlatformIntegration::Capability cap) const
 {
-qDebug() << "QLinuxFbIntegration::hasCapability(QPlatformIntegration::Capability cap)";
-
     switch (cap) {
     case ThreadedPixmaps: return true;
     case WindowManagement: return false;
@@ -110,29 +98,21 @@ qDebug() << "QLinuxFbIntegration::hasCapability(QPlatformIntegration::Capability
 
 QPlatformBackingStore *QLinuxFbIntegration::createPlatformBackingStore(QWindow *window) const
 {
-qDebug() << "QLinuxFbIntegration::createPlatformBackingStore(QWindow *window)";
-
     return new QFbBackingStore(window);
 }
 
 QPlatformWindow *QLinuxFbIntegration::createPlatformWindow(QWindow *window) const
 {
-qDebug() << "QLinuxFbIntegration::createPlatformWindow(QWindow *window)";
-
     return new QFbWindow(window);
 }
 
 QAbstractEventDispatcher *QLinuxFbIntegration::createEventDispatcher() const
 {
-qDebug() << "QLinuxFbIntegration::createEventDispatcher()";
-
     return createUnixEventDispatcher();
 }
 
 QList<QPlatformScreen *> QLinuxFbIntegration::screens() const
 {
-qDebug() << "QLinuxFbIntegration::screens()";
-
     QList<QPlatformScreen *> list;
     list.append(m_primaryScreen);
     return list;
@@ -140,29 +120,19 @@ qDebug() << "QLinuxFbIntegration::screens()";
 
 QPlatformFontDatabase *QLinuxFbIntegration::fontDatabase() const
 {
-qDebug() << "QLinuxFbIntegration::fontDatabase()";
-
     return m_fontDb.data();
 }
 
 QPlatformServices *QLinuxFbIntegration::services() const
 {
-qDebug() << "QLinuxFbIntegration::services()";
-
     return m_services.data();
 }
 
 void QLinuxFbIntegration::createInputHandlers()
 {
-qDebug() << "QLinuxFbIntegration::createInputHandlers";
-
 #if !defined(QT_NO_EVDEV) && (!defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID_NO_SDK))
     new QEvdevKeyboardManager(QLatin1String("EvdevKeyboard"), QString(), this);
-qDebug() << "QEvdevKeyboardManager(QLatin1String("EvdevKeyboard")";
-    
     new QEvdevMouseManager(QLatin1String("EvdevMouse"), QString(), this);
-qDebug() << "QEvdevMouseManager(QLatin1String("EvdevMouse")";
-
 #ifndef QT_NO_TSLIB
     const bool useTslib = qEnvironmentVariableIntValue("QT_QPA_FB_TSLIB");
     if (useTslib)
@@ -175,8 +145,6 @@ qDebug() << "QEvdevMouseManager(QLatin1String("EvdevMouse")";
 
 QPlatformNativeInterface *QLinuxFbIntegration::nativeInterface() const
 {
-qDebug() << "QLinuxFbIntegration::nativeInterface()";
-
     return m_nativeInterface.data();
 }
 

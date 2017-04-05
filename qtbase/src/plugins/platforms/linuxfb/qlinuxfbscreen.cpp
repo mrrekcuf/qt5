@@ -31,16 +31,6 @@
 **
 ****************************************************************************/
 
-///////
-#include <SDL/SDL.h>
-
-////palm pre3
-#define DEFAULT_WIDTH 480   // default if SDL_GetVideoInfo() fails
-#define DEFAULT_HEIGHT 800
-#define DEPTH 32
-//////
-
-
 #include "qlinuxfbscreen.h"
 #include <QtPlatformSupport/private/qfbcursor_p.h>
 #include <QtPlatformSupport/private/qfbwindow_p.h>
@@ -66,14 +56,11 @@
 
 #include <linux/fb.h>
 
-
 QT_BEGIN_NAMESPACE
 
 static int openFramebufferDevice(const QString &dev)
 {
     int fd = -1;
-
-qDebug() << "openFramebufferDevice" << dev ;
 
     if (access(dev.toLatin1().constData(), R_OK|W_OK) == 0)
         fd = QT_OPEN(dev.toLatin1().constData(), O_RDWR);
@@ -82,8 +69,6 @@ qDebug() << "openFramebufferDevice" << dev ;
         if (access(dev.toLatin1().constData(), R_OK) == 0)
             fd = QT_OPEN(dev.toLatin1().constData(), O_RDONLY);
     }
-
-qDebug() << "openFramebufferDevice" << fd ;
 
     return fd;
 }
@@ -100,8 +85,6 @@ static int determineDepth(const fb_var_screeninfo &vinfo)
         if (depth <= 0)
             depth = 16;
     }
-qDebug() << "determineDepth" << depth ;
-    
     return depth;
 }
 
@@ -140,8 +123,6 @@ static QRect determineGeometry(const fb_var_screeninfo &vinfo, const QRect &user
         w = 320;
         h = 240;
     }
-    
-qDebug() << "determineGeometry" << xoff <<  yoff <<  w << h  ;
 
     return QRect(xoff, yoff, w, h);
 }
@@ -165,8 +146,6 @@ static QSizeF determinePhysicalSize(const fb_var_screeninfo &vinfo, const QSize 
     } else if (mmHeight > 0 && mmWidth <= 0) {
         mmWidth = res.width() * mmHeight/res.height();
     }
-
-qDebug() << "determinePhysicalSize" << mmWidth << mmHeight ;
 
     return QSize(mmWidth, mmHeight);
 }
@@ -297,57 +276,16 @@ static void resetTty(int ttyfd, int oldMode)
 
 static void blankScreen(int fd, bool on)
 {
-/****
-qDebug() << "blankScreen";
-
-    const QColor& color, const QRegion& region
-
-    d->_mutex.lock();
-
-    if (!d->_open)
-        return;
-
-    if (SDL_MUSTLOCK(d->_surface)) {
-        if (SDL_LockSurface(d->_surface) < 0) {
-            d->_mutex.unlock();
-            return;
-        }
-    }
-
-    QScreen::solidFill(color, region);
-
-    if (SDL_MUSTLOCK(d->_surface))
-        SDL_UnlockSurface(d->_surface);
-
-    SDL_Flip(d->_surface);
-
-    d->_mutex.unlock();
-****/
-///////    ioctl(fd, FBIOBLANK, on ? VESA_POWERDOWN : VESA_NO_BLANKING);
+    ioctl(fd, FBIOBLANK, on ? VESA_POWERDOWN : VESA_NO_BLANKING);
 }
 
 QLinuxFbScreen::QLinuxFbScreen(const QStringList &args)
     : mArgs(args), mFbFd(-1), mBlitter(0)
 {
-qDebug() << "QLinuxFbScreen::QLinuxFbScreen()";
-
-    d = new SDLScreen_private(false);
-
 }
 
 QLinuxFbScreen::~QLinuxFbScreen()
 {
-qDebug() << "QLinuxFbScreen::~QLinuxFbScreen()";
-    if (d->_open)
-    {
-        d->_mutex.lock();
-        SDL_Quit();
-        d->_open = false;
-        d->_mutex.unlock();
-    }
-
-    delete d;
-/*****/
     if (mFbFd != -1) {
         munmap(mMmap.data - mMmap.offset, mMmap.size);
         close(mFbFd);
@@ -359,17 +297,10 @@ qDebug() << "QLinuxFbScreen::~QLinuxFbScreen()";
     }
 
     delete mBlitter;
-/*****/
-qDebug() << "QLinuxFbScreen::~QLinuxFbScreen() done";
-
 }
 
 bool QLinuxFbScreen::initialize()
 {
-
-qDebug() << "QLinuxFbScreen::initialize";
-
-
     QRegularExpression ttyRx(QLatin1String("tty=(.*)"));
     QRegularExpression fbRx(QLatin1String("fb=(.*)"));
     QRegularExpression mmSizeRx(QLatin1String("mmsize=(\\d+)x(\\d+)"));
@@ -380,218 +311,6 @@ qDebug() << "QLinuxFbScreen::initialize";
     QSize userMmSize;
     QRect userGeometry;
     bool doSwitchToGraphicsMode = true;
-
-
-    // Parse arguments
-    foreach (const QString &arg, mArgs) {
-        QRegularExpressionMatch match;
-        if (arg == QLatin1String("nographicsmodeswitch"))
-            doSwitchToGraphicsMode = false;
-        else if (arg.contains(mmSizeRx, &match))
-            userMmSize = QSize(match.captured(1).toInt(), match.captured(2).toInt());
-        else if (arg.contains(sizeRx, &match))
-            userGeometry.setSize(QSize(match.captured(1).toInt(), match.captured(2).toInt()));
-        else if (arg.contains(offsetRx, &match))
-            userGeometry.setTopLeft(QPoint(match.captured(1).toInt(), match.captured(2).toInt()));
-        else if (arg.contains(ttyRx, &match))
-            ttyDevice = match.captured(1);
-        else if (arg.contains(fbRx, &match))
-            fbDevice = match.captured(1);
-    }
-
-    if (fbDevice.isEmpty()) {
-        fbDevice = QLatin1String("/dev/fb0");
-        if (!QFile::exists(fbDevice))
-            fbDevice = QLatin1String("/dev/graphics/fb0");
-        if (!QFile::exists(fbDevice)) {
-            qWarning("Unable to figure out framebuffer device. Specify it manually.");
-            return false;
-        }
-    }
-
-    // Open the device
-    mFbFd = openFramebufferDevice(fbDevice);
-    if (mFbFd == -1) {
-        qErrnoWarning(errno, "Failed to open framebuffer %s", qPrintable(fbDevice));
-        return false;
-    }
-
-    // Read the fixed and variable screen information
-    fb_fix_screeninfo finfo;
-    fb_var_screeninfo vinfo;
-    memset(&vinfo, 0, sizeof(vinfo));
-    memset(&finfo, 0, sizeof(finfo));
-
-    if (ioctl(mFbFd, FBIOGET_FSCREENINFO, &finfo) != 0) {
-        qErrnoWarning(errno, "Error reading fixed information");
-        return false;
-    }
-
-    if (ioctl(mFbFd, FBIOGET_VSCREENINFO, &vinfo)) {
-        qErrnoWarning(errno, "Error reading variable information");
-        return false;
-    }
-
-
-    mDepth = determineDepth(vinfo);
-    mBytesPerLine = finfo.line_length;
-    QRect geometry = determineGeometry(vinfo, userGeometry);
-    mGeometry = QRect(QPoint(0, 0), geometry.size());
-    mFormat = determineFormat(vinfo, mDepth);
-    mPhysicalSize = determinePhysicalSize(vinfo, userMmSize, geometry.size());
-qDebug() << " device " << mDepth << mMmap.size << mBytesPerLine << mFormat << geometry.width() << geometry.height() << mPhysicalSize.width() << mPhysicalSize.height();
-
-    // mmap the framebuffer
-    mMmap.size = finfo.smem_len;
-    uchar *data = (unsigned char *)mmap(0, mMmap.size, PROT_READ | PROT_WRITE, MAP_SHARED, mFbFd, 0);
-    if ((long)data == -1) {
-        qErrnoWarning(errno, "Failed to mmap framebuffer");
-        return false;
-    }
-
-mMmap.offset = geometry.y() * mBytesPerLine + geometry.x() * mDepth / 8;
-mMmap.data = data + mMmap.offset;
-
-QFbScreen::initializeCompositor();
-mFbScreenImage = QImage(mMmap.data, geometry.width(), geometry.height(), mBytesPerLine, mFormat);
-
-mCursor = new QFbCursor(this);
-
-blankScreen(mFbFd, false);
-
-
-
-    d->_mutex.lock();
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-qDebug() << "SDL_Init failed!" ;
-
-        d->_mutex.unlock();
-        return false;
-    }
-
-// start the PDL library
-//PDL_Init(0);
-//atexit(PDL_Quit);
-
-    int dw = DEFAULT_WIDTH;
-    int dh = DEFAULT_HEIGHT;
-////    QScreen::d = DEPTH;     // We -almost- changed our standard use of 'd' for the private data class over this
-    int depth = DEPTH ;
-     
-    const SDL_VideoInfo* vi = SDL_GetVideoInfo();
-    if (vi != NULL) {
-////        if (d->_showDebugInfo)
-qDebug() << "Video info: " <<  vi->current_w << "x" << vi->current_h << " bpp: " << vi->vfmt->BitsPerPixel;
-
-        if (vi->current_w > 0) {
-            // valid screen dimensions (?)
-////            dw = vi->current_w;
-////            dh = vi->current_h;
-            dw = vi->current_w;
-            dh = vi->current_h;
-            depth = vi->vfmt->BitsPerPixel ;
-        }
-    }
-    else
-    {
-qDebug() << "Video info: NULL" ; 
-    }
-
-
-//////    d->_surface = SDL_SetVideoMode(dw, dh, QScreen::d, SDL_SWSURFACE);
-    d->_surface = SDL_SetVideoMode(dw, dh, depth, SDL_SWSURFACE);
-    if (!d->_surface) {
-qDebug() << "SDL_SetVideoMode() failed!" ;
-        SDL_Quit();
-
-        d->_mutex.unlock();
-        return false;
-    }
-
-
-/****
-    // Ensure that the source image is in the correct pixel format
-    if (mFbScreenImage.format() != QImage::Format_ARGB32)
-        mFbScreenImage = mFbScreenImage.convertToFormat(QImage::Format_ARGB32);
-
-    // QImage stores each pixel in ARGB format
-    // Mask appropriately for the endianness
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Uint32 amask = 0x000000ff;
-    Uint32 rmask = 0x0000ff00;
-    Uint32 gmask = 0x00ff0000;
-    Uint32 bmask = 0xff000000;
-#else
-    Uint32 amask = 0xff000000;
-    Uint32 rmask = 0x00ff0000;
-    Uint32 gmask = 0x0000ff00;
-    Uint32 bmask = 0x000000ff;
-#endif
-
-SDL_Surface* xx =  SDL_CreateRGBSurfaceFrom((void*)mFbScreenImage.constBits(),
-        mFbScreenImage.width(), mFbScreenImage.height(), mFbScreenImage.depth(), mFbScreenImage.bytesPerLine(),
-        rmask, gmask, bmask, amask);
-        
-SDL_FillRect(screen, NULL, SDL_MapRGBA(screen->format, 255, 255, 255, 255));
-SDL_Surface *surf = xx;
-SDL_BlitSurface(surf, NULL, screen, NULL);
-SDL_FreeSurface(surf);
-SDL_Flip(screen);
-****/
-
-
-/*****
-
-////    uchar* data = (uchar*)d->_surface->pixels;
-    
-    bool grayscale = false;
-    int w = dw;
-    int h = dh;
-    int mapsize = dw * dh * depth;
-
-    int physWidth = 44;         // experimental numbers resulting in reasonable font sizes
-    int physHeight = 63;
-    physWidth = w / 3;
-    physHeight = h / 3;
-
-/////    pixeltype = QScreen::NormalPixel;
-    int screencols = 0;
-    int size = mapsize;
-    int lstep = dw * depth/8;
-
-
-mMmap.size = mapsize ;
-mDepth = depth;
-mBytesPerLine = lstep;
-QRect geometry = QRect(0, 0, w, h);;
-mGeometry = QRect(QPoint(0, 0), geometry.size());
-mFormat = QImage::Format_ARGB32;
-mPhysicalSize = QSize(physWidth, physHeight);
-qDebug() << " device " << mDepth << mMmap.size << mBytesPerLine << mFormat << geometry.width() << geometry.height() << mPhysicalSize.width() << mPhysicalSize.height();
-******/
-
-    d->_open = true;
-
-    d->_mutex.unlock();
-
-
-qDebug() << "QLinuxFbScreen::initialize Exit";
-
-return true;
-
-/*****
-    QRegularExpression ttyRx(QLatin1String("tty=(.*)"));
-    QRegularExpression fbRx(QLatin1String("fb=(.*)"));
-    QRegularExpression mmSizeRx(QLatin1String("mmsize=(\\d+)x(\\d+)"));
-    QRegularExpression sizeRx(QLatin1String("size=(\\d+)x(\\d+)"));
-    QRegularExpression offsetRx(QLatin1String("offset=(\\d+)x(\\d+)"));
-
-    QString fbDevice, ttyDevice;
-    QSize userMmSize;
-    QRect userGeometry;
-    bool doSwitchToGraphicsMode = true;
-
 
     // Parse arguments
     foreach (const QString &arg, mArgs) {
@@ -678,85 +397,21 @@ return true;
     blankScreen(mFbFd, false);
 
     return true;
-****/
-    
 }
 
 QRegion QLinuxFbScreen::doRedraw()
 {
-qDebug() << "QLinuxFbScreen::doRedraw";
-
     QRegion touched = QFbScreen::doRedraw();
-qDebug() << "QLinuxFbScreen::doRedraw11";
 
     if (touched.isEmpty())
         return touched;
-qDebug() << "QLinuxFbScreen::doRedraw22";
 
     if (!mBlitter)
         mBlitter = new QPainter(&mFbScreenImage);
-qDebug() << "QLinuxFbScreen::doRedraw33";
 
     QVector<QRect> rects = touched.rects();
     for (int i = 0; i < rects.size(); i++)
         mBlitter->drawImage(rects[i], *mScreenImage, rects[i]);
-qDebug() << "QLinuxFbScreen::doRedraw44";
-
-
-    if (!d->_open)
-        return touched;
-
-    if (SDL_MUSTLOCK(d->_surface)) {
-        if (SDL_LockSurface(d->_surface) < 0) {
-            d->_mutex.unlock();
-            return touched;
-        }
-    }
-
-///    QPoint topLeftRaw = QPoint(0, 0);
-///    QScreen::blit(mFbScreenImage, topLeftRaw, touched);
-
-
-    // Ensure that the source image is in the correct pixel format
-    if (mFbScreenImage.format() != QImage::Format_ARGB32)
-        mFbScreenImage = mFbScreenImage.convertToFormat(QImage::Format_ARGB32);
-
-    // QImage stores each pixel in ARGB format
-    // Mask appropriately for the endianness
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Uint32 amask = 0x000000ff;
-    Uint32 rmask = 0x0000ff00;
-    Uint32 gmask = 0x00ff0000;
-    Uint32 bmask = 0xff000000;
-#else
-    Uint32 amask = 0xff000000;
-    Uint32 rmask = 0x00ff0000;
-    Uint32 gmask = 0x0000ff00;
-    Uint32 bmask = 0x000000ff;
-#endif
-
-SDL_Surface* xx =  SDL_CreateRGBSurfaceFrom((void*)mFbScreenImage.constBits(),
-        mFbScreenImage.width(), mFbScreenImage.height(), mFbScreenImage.depth(), mFbScreenImage.bytesPerLine(),
-        rmask, gmask, bmask, amask);
-        
-SDL_FillRect(d->_surface, NULL, SDL_MapRGBA(d->_surface->format, 255, 255, 255, 255));
-SDL_Surface *surf = xx;
-SDL_BlitSurface(xx, NULL, d->_surface, NULL);
-SDL_FreeSurface(xx);
-SDL_Flip(d->_surface);
-
-
-
-
-    if (SDL_MUSTLOCK(d->_surface))
-        SDL_UnlockSurface(d->_surface);
-
-    SDL_Flip(d->_surface);
-
-    d->_mutex.unlock();
-
-qDebug() << "QLinuxFbScreen::doRedraw55";
-        
     return touched;
 }
 
@@ -764,8 +419,6 @@ qDebug() << "QLinuxFbScreen::doRedraw55";
 // In linuxfb's case it will also include the mouse cursor.
 QPixmap QLinuxFbScreen::grabWindow(WId wid, int x, int y, int width, int height) const
 {
-qDebug() << "QLinuxFbScreen::grabWindow";
-
     if (!wid) {
         if (width < 0)
             width = mFbScreenImage.width() - x;

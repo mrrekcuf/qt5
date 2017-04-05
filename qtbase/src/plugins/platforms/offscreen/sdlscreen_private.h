@@ -42,9 +42,7 @@ signals:
 public:
     void sendQtMouseEvent ( int code, int x, int y, int buttons );
     void sendQtKeyEvent ( int code, SDL_KeyboardEvent key );
-    
-    int w, h;
-    int orientation;
+
 
     bool _showDebugInfo;
 

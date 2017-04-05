@@ -23,13 +23,8 @@ SOURCES =   main.cpp \
     palmpremouse.cpp \
     palmprekeyboard.cpp \
     dlgsymbols.cpp \
-    symbolbutton.cpp \
-    
-    
-##qqnxglcontext.cpp \
-##qqnxeglwindow.cpp \
-#    palmFiledialoghelper.cpp \
-#    palmFilepicker.cpp \
+    symbolbutton.cpp
+
 
 
 HEADERS =   qoffscreenintegration.h \
@@ -42,13 +37,8 @@ HEADERS =   qoffscreenintegration.h \
     palmprekeyboard.h \
     dlgsymbols.h \
     palmprekeyboard_private.h \
-    symbolbutton.h \
+    symbolbutton.h
 
-
-##qqnxglcontext.h \
-##qqnxeglwindow.h \
-#    palmFiledialoghelper.h \
-#    palmFilepicker.h \
 
 
 

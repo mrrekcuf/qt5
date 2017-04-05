@@ -61,10 +61,6 @@ public:
     QPlatformServices *services() const Q_DECL_OVERRIDE;
 
 
-
-    QVariant styleHint(StyleHint hint) const Q_DECL_OVERRIDE;
-
-
     QPlatformFontDatabase *fontDatabase() const Q_DECL_OVERRIDE;
     QAbstractEventDispatcher *createEventDispatcher() const Q_DECL_OVERRIDE;
 

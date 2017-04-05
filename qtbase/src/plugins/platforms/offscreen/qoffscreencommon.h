@@ -82,7 +82,6 @@ public:
 
 
     void updateSDL(QImage &);    
-    void updateSDL(QImage &m_image, QWindow *window) ;
     
 public:
     QRect m_geometry;
@@ -117,7 +116,6 @@ public:
     static QOffscreenBackingStore *backingStoreForWinId(WId id);
 
 
-    
     
 private:
     void clearHash();

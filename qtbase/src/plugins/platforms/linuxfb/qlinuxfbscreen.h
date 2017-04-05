@@ -36,12 +36,6 @@
 
 #include <QtPlatformSupport/private/qfbscreen_p.h>
 
-///////
-#include "sdlscreen_private.h"
-///////
-
-
-
 QT_BEGIN_NAMESPACE
 
 class QPainter;
@@ -75,10 +69,6 @@ private:
     } mMmap;
 
     QPainter *mBlitter;
-    
-    
-    SDLScreen_private* d;    
-    
 };
 
 QT_END_NAMESPACE

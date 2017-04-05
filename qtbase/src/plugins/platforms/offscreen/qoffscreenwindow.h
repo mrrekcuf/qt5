@@ -39,7 +39,6 @@
 
 #include <qhash.h>
 
-
 QT_BEGIN_NAMESPACE
 
 class QOffscreenWindow : public QPlatformWindow
@@ -56,10 +55,8 @@ public:
     void setVisible(bool visible) Q_DECL_OVERRIDE;
     void requestActivateWindow() Q_DECL_OVERRIDE;
 
-void setOpacity(qreal level);
-void raise();
-void lower();
-
+    void raise();
+    void lower();
 
 
 

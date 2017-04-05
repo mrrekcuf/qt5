@@ -38,17 +38,8 @@
 
 
 ////palm pre3
-/////#define DEFAULT_WIDTH 320 // 480   // default if SDL_GetVideoInfo() fails
-/////#define DEFAULT_HEIGHT 480 // 800
-
-////palm pre3
-#define DEFAULT_WIDTH  480   // default if SDL_GetVideoInfo() fails
+#define DEFAULT_WIDTH 480   // default if SDL_GetVideoInfo() fails
 #define DEFAULT_HEIGHT 800
-
-////palm touchpad
-#define DEFAULT_WIDTH  768   // default if SDL_GetVideoInfo() fails
-#define DEFAULT_HEIGHT 1024
-
 #define DEPTH 32
 //////
 
@@ -154,19 +145,11 @@ qDebug() << "QOffscreenScreen::~QOffscreenScree()";
 bool QOffscreenScreen::initialize()
 {
 
-    PDL_SensorType sensor = PDL_SENSOR_ORIENTATION;
-    PDL_OrientationEvent event1;
-
 qDebug() << "QOffscreenScreen::initialize() Enter";
 
     PDL_Init(0);
     atexit(PDL_Quit);
-
-    if (PDL_GetHardwareID()> HARDWARE_PRE_3)
-    {
-        PDL_EnableSensor(sensor, PDL_TRUE);
-        PDL_SetOrientation(PDL_ORIENTATION_90);
-    };
+    
 /****    
     PDL_SensorType sensor = PDL_SENSOR_ORIENTATION;
     PDL_OrientationEvent event1;
@@ -234,6 +217,7 @@ qDebug() << "SDL_Init failed!" ;
         d->_mutex.unlock();
         return false;
     }
+    atexit(SDL_Quit);
     
 // start the PDL library
 //PDL_Init(0);
@@ -247,61 +231,21 @@ qDebug() << "SDL_Init failed!" ;
     const SDL_VideoInfo* vi = SDL_GetVideoInfo();
     if (vi != NULL) {
 ////        if (d->_showDebugInfo)
-qDebug() << "Video info: width " <<  vi->current_w << "x height " << vi->current_h << " bpp: " << vi->vfmt->BitsPerPixel;
+qDebug() << "Video info: " <<  vi->current_w << "x" << vi->current_h << " bpp: " << vi->vfmt->BitsPerPixel;
 
         if (vi->current_w > 0) {
             // valid screen dimensions (?)
 ////            dw = vi->current_w;
 ////            dh = vi->current_h;
-	    dw = vi->current_w;
-    	    dh = vi->current_h;	    
-
-            switch (d->orientation)
-	    {
-    	        case 4:
-        //            output.append("Top up");
-        // portiat
-		    if (dw > dh) // touch pad
-		    {	
-			dh = vi->current_w;
-    			dw = vi->current_h;
-		    }        
-    	            break;
-                case 3:
-        //            output.append("Top down");
-	            break;
-    	        case 5:
-        	    break;
-        	case 6:
-        //           output.append("Right up");
-        // landscape
-                    break;
-                case 1:
-        //            output.append("Face up");
-	            break;
-	        case 2:
-        //            output.append("Face down");
-                break;
-    	        case 0:
-        //            output.append("Undefined");
-        	    break;
-        ////        default:
-        //        output = "Invalid enum value";
-            } // switch
-        /////    ui->OrientationValue->setText(output);
-        ///// qDebug() << output;
-    	    
+            dw = vi->current_w;
+            dh = vi->current_h;
             depth = vi->vfmt->BitsPerPixel ;
         }
-        
     }
     else
     {
 qDebug() << "Video info: NULL" ; 
     }
-
-
-qDebug() << "Setting Video info: width " <<  dw << "x height " << dh << " bpp: " << depth;
 
 ////    d->_surface = SDL_SetVideoMode(dw, dh, QScreen::d, SDL_SWSURFACE);
     d->_surface = SDL_SetVideoMode(dw, dh, depth, SDL_SWSURFACE);
@@ -313,29 +257,21 @@ qDebug() << "SDL_SetVideoMode() failed!" ;
         return false;
     }
 
-    d->w = dw;
-    d->h = dh;
-    
     d->_open = true;
 
     d->_mutex.unlock();
 
 qDebug() << "QOffscreenScreen::initialize Exit";
 
-m_geometry.setRect(0, 0, dw, dh);
-
-//////PDL_SetKeyboardState(PDL_TRUE);
-
 return true;
 
 }
 
 
-////// not use
-void QOffscreenScreen::updateSDL(QImage &m_image) 
-{
+void QOffscreenScreen::updateSDL(QImage &m_image) {
+
 //////qDebug() << "QOffscreenScreen::updateSDL()" ;
-/////
+
     if (d == NULL) 
         return;
         
@@ -375,8 +311,9 @@ SDL_Surface* xx =  SDL_CreateRGBSurfaceFrom((void*)m_image.constBits(),
         m_image.width(), m_image.height(), m_image.depth(), m_image.bytesPerLine(),
         rmask, gmask, bmask, amask);
 
+SDL_FillRect(d->_surface, NULL, SDL_MapRGBA(d->_surface->format, 255, 255, 255, 255));
+/////SDL_Surface *surf = xx;
 SDL_BlitSurface(xx, NULL, d->_surface, NULL);
-
 SDL_FreeSurface(xx);
 SDL_Flip(d->_surface);
     if (SDL_MUSTLOCK(d->_surface))
@@ -388,180 +325,12 @@ SDL_Flip(d->_surface);
 
 }
 
-
-void QOffscreenScreen::updateSDL(QImage &m_image, QWindow *window) 
-{
-    PDL_SensorType sensor = PDL_SENSOR_ORIENTATION;
-    PDL_OrientationEvent event1;
-
-//////qDebug() << "QOffscreenScreen::updateSDL()" ;
-
-    if (d == NULL) 
-        return;
-        
-    if (!d->_open)
-	return ;       
-
-
-    if (SDL_MUSTLOCK(d->_surface)) {
-        if (SDL_LockSurface(d->_surface) < 0) {
-            d->_mutex.unlock();
-            return ;            
-        }
-    }
-
-///    QPoint topLeftRaw = QPoint(0, 0);
-///    QScreen::blit(mFbScreenImage, topLeftRaw, touched);
-
-    // Ensure that the source image is in the correct pixel format
-    if (m_image.format() != QImage::Format_ARGB32)
-        m_image  = m_image.convertToFormat(QImage::Format_ARGB32);
-
-    // QImage stores each pixel in ARGB format
-    // Mask appropriately for the endianness
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    Uint32 amask = 0x000000ff;
-    Uint32 rmask = 0x0000ff00;
-    Uint32 gmask = 0x00ff0000;
-    Uint32 bmask = 0xff000000;
-#else
-    Uint32 amask = 0xff000000;
-    Uint32 rmask = 0x00ff0000;
-    Uint32 gmask = 0x0000ff00;
-    Uint32 bmask = 0x000000ff;
-#endif
-
-SDL_Surface* xx =  SDL_CreateRGBSurfaceFrom((void*)m_image.constBits(),
-        m_image.width(), m_image.height(), m_image.depth(), m_image.bytesPerLine(),
-        rmask, gmask, bmask, amask);
-
-/////SDL_FillRect(d->_surface, NULL, SDL_MapRGBA(d->_surface->format, 255, 255, 255, 255));
-/////SDL_Surface *surf = xx;
-
-SDL_Rect dstrect;
-dstrect.x = window->position().x();
-dstrect.y = window->position().y();
-dstrect.w = m_image.width();
-dstrect.h = m_image.height();
-
-/*****
-//qDebug() << "PDL_EnableSensor"  <<
-        PDL_EnableSensor(sensor, PDL_TRUE);
-//qDebug() << "PDL_PollSensor" <<
-	PDL_PollSensor(sensor, (PDL_SensorEvent *)&event1);
-    ////PDL_EnableSensor(sensor, PDL_FALSE);
-
-        if (event1.type == PDL_SENSOR_ORIENTATION) //PDL_SENSOR_ROTATION)
-        {
-///qDebug() << event1.orientation ;
-            switch (event1.orientation)
-	    {
-    	        case 4:
-        //            output.append("Top up");
-	    {
-		int bpp = xx->format->BytesPerPixel;
-		int w=xx->w, h=xx->h, pitch=d->_surface->pitch;	    
-		Uint8 *pfrom, *pto, *to0;
-		pfrom=(Uint8 *)xx->pixels;
-		to0=(Uint8 *) d->_surface->pixels+pitch*(w-1);
-		for (int i=0; i<h; i++)
-		{
-		    to0+=bpp;
-		    pto=to0;
-		    for (int j=0; j<w; j++)
-		    {
-			if (bpp==1) *pto=*pfrom;
-			else if (bpp==2) *(Uint16 *)pto=*(Uint16 *)pfrom;
-			else if (bpp==4) *(Uint32 *)pto=*(Uint32 *)pfrom;
-			else if (bpp==3)
-			{
-			    pto[0]=pfrom[0];
-			    pto[1]=pfrom[1];
-			    pto[2]=pfrom[2];
-			}
-			pfrom+=bpp;
-			pto-=pitch;
-		    }
-		};
-	    }
-        
-    	            break;
-                case 3:
-        //            output.append("Top down");
-	            break;
-    	        case 5:
-        //            output.append("Left up");
-/////SDL_FillRect(d->_surface, NULL, SDL_MapRGBA(d->_surface->format, 255, 255, 255, 255));
-/////SDL_Surface *surf = xx;
-SDL_BlitSurface(xx, NULL, d->_surface, &dstrect);
-        
-        	    break;
-        	case 6:
-        //           output.append("Right up");
-                    break;
-                case 1:
-        //            output.append("Face up");
-	            break;
-	        case 2:
-        //            output.append("Face down");
-                break;
-    	        case 0:
-        //            output.append("Undefined");
-        	    break;
-        ////        default:
-        //        output = "Invalid enum value";
-            } // switch
-        /////    ui->OrientationValue->setText(output);
-        ///// qDebug() << output;
-	} ;    
-****/
-SDL_BlitSurface(xx, NULL, d->_surface, &dstrect);
-
-    
-SDL_FreeSurface(xx);
-SDL_Flip(d->_surface);
-    if (SDL_MUSTLOCK(d->_surface))
-        SDL_UnlockSurface(d->_surface);
-
-    SDL_Flip(d->_surface);
-
-    d->_mutex.unlock();
-
-///PDL_bool bVisible = PDL_TRUE ;
-            switch (d->orientation)
-	    {
-    	        case 4:
-PDL_SetOrientation(PDL_ORIENTATION_90);
-    	            break;
-                case 3:
-        //            output.append("Top down");
-	            break;
-    	        case 5:
-        	    break;
-        	case 6:
-PDL_SetOrientation(PDL_ORIENTATION_0);        	
-                    break;
-                case 1:
-        //            output.append("Face up");
-	            break;
-	        case 2:
-        //            output.append("Face down");
-                break;
-    	        case 0:
-        //            output.append("Undefined");
-        	    break;
-        ////        default:
-        //        output = "Invalid enum value";
-            } // switch
-
-
-}
 
 
 
 QPixmap QOffscreenScreen::grabWindow(WId id, int x, int y, int width, int height) const
 {
-qDebug() << "QOffscreenScreen::grabWindow(WId id, int x, int y, int width, int height)" << id << x << y << width << height ;
+qDebug() << "QOffscreenScreen::grabWindow(WId id, int x, int y, int width, int height)" << x << y << width << height ;
 
     QRect rect(x, y, width, height);
 
@@ -590,10 +359,6 @@ qDebug() << "QOffscreenScreen::grabWindow(WId id, int x, int y, int width, int h
 }
 
 
-
-
-
-
 QOffscreenBackingStore::QOffscreenBackingStore(QWindow *window)
     : QPlatformBackingStore(window)
 {
@@ -615,18 +380,16 @@ QPaintDevice *QOffscreenBackingStore::paintDevice()
 
 void QOffscreenBackingStore::flush(QWindow *window, const QRegion &region, const QPoint &offset)
 {
-/////qDebug() << "QOffscreenBackingStore::flush(QWindow *window, const QRegion &region, const QPoint &offset)" << offset << region.boundingRect() << window->position()  ;
+//////qDebug() << "QOffscreenBackingStore::flush(QWindow *window, const QRegion &region, const QPoint &offset)";
 
     Q_UNUSED(region);
 
     if (m_image.size().isEmpty())
-    {
-qDebug() << "QOffscreenBackingStore::flush(QWindow *window, const QRegion &region, const QPoint &offset) m_image.size().isEmpty()";
         return;
-    } ;
 
     QSize imageSize = m_image.size();
 //////////////////////////qDebug() << "QOffscreenBackingStore::flush(QWindow *window, const QRegion &region, const QPoint &offset)" << imageSize.width() << imageSize.height() ;
+
 
     QRegion clipped = QRect(0, 0, window->width(), window->height());
     clipped &= QRect(0, 0, imageSize.width(), imageSize.height()).translated(-offset);
@@ -634,25 +397,23 @@ qDebug() << "QOffscreenBackingStore::flush(QWindow *window, const QRegion &regio
     QRect bounds = clipped.boundingRect().translated(offset);
 
     if (bounds.isNull())
-    {
-qDebug() << "QOffscreenBackingStore::flush(QWindow *window, const QRegion &region, const QPoint &offset) bounds.isNull()";    
         return;
-    };
+
     WId id = window->winId();
 
     m_windowAreaHash[id] = bounds;
     m_backingStoreForWinIdHash[id] = this;
 
-((QOffscreenScreen *)QGuiApplication::primaryScreen())->updateSDL(m_image, window) ;
+((QOffscreenScreen *)QGuiApplication::primaryScreen())->updateSDL(m_image) ;
 //////qDebug() << "QOffscreenBackingStore::flush() done" ;
 activeWindow = window ;
 
 }
 
 
-void QOffscreenBackingStore::resize(const QSize &size, const QRegion &region)
+void QOffscreenBackingStore::resize(const QSize &size, const QRegion &)
 {
-qDebug() << "QOffscreenBackingStore::resize(const QSize &size, const QRegion &)" <<  size << region ;
+qDebug() << "QOffscreenBackingStore::resize(const QSize &size, const QRegion &)" <<  size.width() << size.height() ;
 
 ////    QSize sizeTemp = size;
 ///    sizeTemp.transpose();
@@ -660,14 +421,13 @@ qDebug() << "QOffscreenBackingStore::resize(const QSize &size, const QRegion &)"
 ////qDebug() << "QOffscreenBackingStore::resize(const QSize &size, const QRegion &)" <<  sizeTemp.width() << sizeTemp.height() ;
     
     QImage::Format format = QGuiApplication::primaryScreen()->handle()->format();
-qDebug() << "QOffscreenBackingStore::resize " << m_image.size() <<  size ;
     if (m_image.size() != size)
     {
         m_image = QImage(size, format);
-//////        ((QOffscreenScreen *)QGuiApplication::primaryScreen())->updateSDL(m_image) ;
+((QOffscreenScreen *)QGuiApplication::primaryScreen())->updateSDL(m_image) ;
     }
     
-////    clearHash();
+    clearHash();
 }
 
 
@@ -728,7 +488,7 @@ qDebug() << "QOffscreenBackingStore::clearHash()";
             m_backingStoreForWinIdHash.remove(id);
     }
     m_windowAreaHash.clear();
-activeWindow = 0;
+activeWindow = 0;    
 }
 
 QHash<WId, QOffscreenBackingStore *> QOffscreenBackingStore::m_backingStoreForWinIdHash;

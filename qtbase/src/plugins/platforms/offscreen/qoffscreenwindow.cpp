@@ -39,9 +39,6 @@
 
 #include <private/qwindow_p.h>
 
-////#define DISPLAYWIDTH	480
-////#define DISPLAYHEIGHT	800
-
 QT_BEGIN_NAMESPACE
 
 QOffscreenWindow::QOffscreenWindow(QWindow *window)
@@ -65,7 +62,7 @@ QOffscreenWindow::QOffscreenWindow(QWindow *window)
 
     m_windowForWinIdHash[m_winId] = this;
     
-qDebug() << "QOffscreenWindow::QOffscreenWindow(QWindow *window) created " << m_winId;    
+qDebug() << "QOffscreenWindow::QOffscreenWindow(QWindow *window)" << m_winId;    
 }
 
 QOffscreenWindow::~QOffscreenWindow()
@@ -79,16 +76,15 @@ qDebug() << "QOffscreenWindow::~QOffscreenWindow()" << m_winId;
 
 void QOffscreenWindow::setGeometry(const QRect &rect)
 {
-qDebug() << "QOffscreenWindow::setGeometry(const QRect &rect)" << rect ;
+
+qDebug() << "QOffscreenWindow::setGeometry(const QRect &rect)" << rect.x() << rect.y() << rect.width() << rect.height() ;
 
     if (window()->windowState() != Qt::WindowNoState)
         return;
-qDebug() << "QOffscreenWindow::setGeometry(const QRect &rect) 2222" << rect ;
 
     m_positionIncludesFrame = qt_window_private(window())->positionPolicy == QWindowPrivate::WindowFrameInclusive;
 
-////    setFrameMarginsEnabled(true);
-    setFrameMarginsEnabled(false);
+    setFrameMarginsEnabled(true);
     setGeometryImpl(rect);
 
     m_normalGeometry = geometry();
@@ -96,72 +92,39 @@ qDebug() << "QOffscreenWindow::setGeometry(const QRect &rect) 2222" << rect ;
 
 void QOffscreenWindow::setGeometryImpl(const QRect &rect)
 {
-qDebug() << "QOffscreenWindow::setGeometryImpl(const QRect &rect)" << rect ;
+qDebug() << "QOffscreenWindow::setGeometryImpl(const QRect &rect)" << rect.x() << rect.y() << rect.width() << rect.height() ;
     QRect adjusted = rect;
     if (adjusted.width() <= 0)
         adjusted.setWidth(1);
     if (adjusted.height() <= 0)
         adjusted.setHeight(1);
 
-////    if (m_positionIncludesFrame) {
-////        adjusted.translate(m_margins.left(), m_margins.top());
-////    } else {
+    if (m_positionIncludesFrame) {
+        adjusted.translate(m_margins.left(), m_margins.top());
+    } else {
         // make sure we're not placed off-screen
-////        if (adjusted.left() < m_margins.left())
-////            adjusted.translate(m_margins.left(), 0);
-////        if (adjusted.top() < m_margins.top())
-////            adjusted.translate(0, m_margins.top());
-/////    }
-
-
-////// Pre3
-////if (adjusted.width() >= DISPLAYWIDTH)
-if (adjusted.width() >= d->w)
-////    adjusted.setHeight(DISPLAYWIDTH);
-    adjusted.setWidth(d->w);
+        if (adjusted.left() < m_margins.left())
+            adjusted.translate(m_margins.left(), 0);
+        if (adjusted.top() < m_margins.top())
+            adjusted.translate(0, m_margins.top());
+    }
     
-/////if (adjusted.height() >= DISPLAYHEIGHT)
-if (adjusted.height() >= d->h)
-/////    adjusted.setHeight(DISPLAYHEIGHT);
-    adjusted.setHeight(d->h);    
-
-//////if (adjusted.x() + adjusted.width() > DISPLAYWIDTH)
-/////    adjusted.moveLeft(rect.x() - (rect.x() +adjusted.width() -DISPLAYWIDTH) -5);
-/////if (adjusted.y() + adjusted.height() > DISPLAYHEIGHT)
-/////    adjusted.moveTop(rect.y() - (rect.y() +adjusted.height()-DISPLAYHEIGHT) -5 );
-
-
-//////////if (adjusted.x() + adjusted.width() > d->w)
-//////////    adjusted.moveLeft(rect.x() - (rect.x() +adjusted.width() -d->w) -5);
-//////////if (adjusted.y() + adjusted.height() > d->h)
-//////////    adjusted.moveTop(rect.y() - (rect.y() +adjusted.height()-d->h) -5 );
-
+////// Pre3
+if (adjusted.width() >= 480)
+    adjusted.setWidth(480);
+if (adjusted.height() >=800)
+    adjusted.setHeight(800);
 
     QPlatformWindow::setGeometry(adjusted);
-qDebug() << "QOffscreenWindow::setGeometryImpl(const QRect &rect) adjusted " << adjusted << m_visible ;
+qDebug() << "QOffscreenWindow::setGeometryImpl(const QRect &rect) adjusted " << adjusted.x() << adjusted.y() << adjusted.width() << adjusted.height() ;
 
-    QWindowSystemInterface::handleGeometryChange(window(), adjusted);
-    QWindowSystemInterface::handleExposeEvent(window(), QRect(QPoint(rect.x(), rect.y()), adjusted.size()));
     if (m_visible) {
         QWindowSystemInterface::handleGeometryChange(window(), adjusted);
-        QWindowSystemInterface::handleExposeEvent(window(), QRect(QPoint(rect.x(), rect.y()), adjusted.size()));
+        QWindowSystemInterface::handleExposeEvent(window(), QRect(QPoint(), adjusted.size()));
     } else {
         m_pendingGeometryChangeOnShow = true;
     }
 }
-
-
-void QOffscreenWindow::setOpacity(qreal level)
-{
-qDebug() << Q_FUNC_INFO << "window =" << window() << "opacity =" << level;
-    // Set window global alpha
-    int val = (int)(level * 255);
-/////    Q_SCREEN_CHECKERROR(screen_set_window_property_iv(m_window, SCREEN_PROPERTY_GLOBAL_ALPHA, &val),
-/////                        "Failed to set global alpha");
-
-////    screen_flush_context(m_screenContext, 0);
-}
-
 
 
 void QOffscreenWindow::raise()
@@ -205,21 +168,19 @@ qDebug() << "QOffscreenWindow::setVisible(bool visible)" << visible;
 
     if (visible == m_visible)
         return;
-qDebug() << "QOffscreenWindow::setVisible(bool visible) 2222 " << visible << geometry();
 
     if (visible) {
         if (window()->type() != Qt::ToolTip)
             QWindowSystemInterface::handleWindowActivated(window());
 
-        if (m_pendingGeometryChangeOnShow) 
-        {
+        if (m_pendingGeometryChangeOnShow) {
             m_pendingGeometryChangeOnShow = false;
             QWindowSystemInterface::handleGeometryChange(window(), geometry());
         }
     }
 
     if (visible) {
-        QRect rect(QPoint(geometry().x(), geometry().y() ), geometry().size());
+        QRect rect(QPoint(), geometry().size());
         QWindowSystemInterface::handleExposeEvent(window(), rect);
     } else {
         QWindowSystemInterface::handleExposeEvent(window(), QRegion());
@@ -230,7 +191,7 @@ qDebug() << "QOffscreenWindow::setVisible(bool visible) 2222 " << visible << geo
 
 void QOffscreenWindow::requestActivateWindow()
 {
-qDebug() << "QOffscreenWindow::requestActivateWindow()" << m_visible;
+qDebug() << "QOffscreenWindow::requestActivateWindow()" ;
     if (m_visible)
         QWindowSystemInterface::handleWindowActivated(window());
 }
@@ -238,6 +199,7 @@ qDebug() << "QOffscreenWindow::requestActivateWindow()" << m_visible;
 WId QOffscreenWindow::winId() const
 {
 ///////////////////////qDebug() << "QOffscreenWindow::winId() const" << m_winId;
+
     return m_winId;
 }
 
@@ -252,9 +214,9 @@ void QOffscreenWindow::setFrameMarginsEnabled(bool enabled)
 {
 qDebug() << "QOffscreenWindow::setFrameMarginsEnabled(bool enabled)";
 
-////    if (enabled && !(window()->flags() & Qt::FramelessWindowHint))
-////        m_margins = QMargins(2, 2, 2, 2);
-/////    else
+    if (enabled && !(window()->flags() & Qt::FramelessWindowHint))
+        m_margins = QMargins(2, 2, 2, 2);
+    else
         m_margins = QMargins(0, 0, 0, 0);
 }
 
@@ -290,14 +252,11 @@ qDebug() << "QOffscreenWindow::setWindowState(Qt::WindowState state) WindowNoSta
 
 QOffscreenWindow *QOffscreenWindow::windowForWinId(WId id)
 {
-qDebug() << "QOffscreenWindow::windowForWinId(WId id)" << id ;
+qDebug() << "QOffscreenWindow::windowForWinId(WId id)" ;
 
     return m_windowForWinIdHash.value(id, 0);
 }
 
 QHash<WId, QOffscreenWindow *> QOffscreenWindow::m_windowForWinIdHash;
-
-
-
 
 QT_END_NAMESPACE

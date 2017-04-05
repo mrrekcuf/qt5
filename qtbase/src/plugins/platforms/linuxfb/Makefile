@@ -35,8 +35,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = qlinuxfb1.0.0
 DISTDIR = /opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb/.obj/qlinuxfb1.0.0
 LINK          = arm-none-linux-gnueabi-g++ -Wl,--allow-shlib-undefined
-LFLAGS        = --sysroot=/opt/PalmPDK/arm-gcc/sysroot -Wl,--no-undefined -Wl,-O1 -shared
-LIBS          = $(SUBLIBS) -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -lSDL -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5PlatformSupport -lfreetype -lQt5Gui -lQt5Core -lstdc++ -lm -lGLESv2 -lpthread 
+LFLAGS        = --sysroot=/opt/PalmPDK/arm-gcc/sysroot -Wl,--no-undefined -Wl,-O1 -Wl,-rpath,/opt/qt.palm/qtbase/runtime/lib -shared
+LIBS          = $(SUBLIBS) -L/opt/PalmPDK/device/lib -L/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/lib -L/opt/qt-everywhere-opensource-src-5.5.1/qtbase/lib -lQt5PlatformSupport -lfreetype -lQt5Gui -lQt5Core -lpthread 
 AR            = arm-none-linux-gnueabi-ar cqs
 RANLIB        = 
 SED           = sed
@@ -50,19 +50,11 @@ OBJECTS_DIR   = .obj/
 
 SOURCES       = main.cpp \
 		qlinuxfbintegration.cpp \
-		qlinuxfbscreen.cpp \
-		sdlscreen_private.cpp \
-		sdlscreenthread.cpp .moc/moc_qlinuxfbscreen.cpp \
-		.moc/moc_sdlscreen_private.cpp \
-		.moc/moc_sdlscreenthread.cpp
+		qlinuxfbscreen.cpp .moc/moc_qlinuxfbscreen.cpp
 OBJECTS       = .obj/main.o \
 		.obj/qlinuxfbintegration.o \
 		.obj/qlinuxfbscreen.o \
-		.obj/sdlscreen_private.o \
-		.obj/sdlscreenthread.o \
-		.obj/moc_qlinuxfbscreen.o \
-		.obj/moc_sdlscreen_private.o \
-		.obj/moc_sdlscreenthread.o
+		.obj/moc_qlinuxfbscreen.o
 DIST          = ../../../../mkspecs/features/spec_pre.prf \
 		../../../../mkspecs/common/unix.conf \
 		../../../../mkspecs/common/linux.conf \
@@ -86,12 +78,6 @@ DIST          = ../../../../mkspecs/features/spec_pre.prf \
 		../../../../mkspecs/modules-inst/qt_lib_network.pri \
 		../../../../mkspecs/modules-inst/qt_lib_network_private.pri \
 		../../../../mkspecs/modules/qt_lib_network.pri \
-		../../../../mkspecs/modules-inst/qt_lib_opengl.pri \
-		../../../../mkspecs/modules-inst/qt_lib_opengl_private.pri \
-		../../../../mkspecs/modules/qt_lib_opengl.pri \
-		../../../../mkspecs/modules-inst/qt_lib_openglextensions.pri \
-		../../../../mkspecs/modules-inst/qt_lib_openglextensions_private.pri \
-		../../../../mkspecs/modules/qt_lib_openglextensions.pri \
 		../../../../mkspecs/modules-inst/qt_lib_platformsupport_private.pri \
 		../../../../mkspecs/modules/qt_lib_platformsupport_private.pri \
 		../../../../mkspecs/modules-inst/qt_lib_printsupport.pri \
@@ -135,8 +121,6 @@ DIST          = ../../../../mkspecs/features/spec_pre.prf \
 		../../../../mkspecs/modules/qt_plugin_qsqlite.pri \
 		../../../../mkspecs/modules-inst/qt_plugin_qtuiotouchplugin.pri \
 		../../../../mkspecs/modules/qt_plugin_qtuiotouchplugin.pri \
-		../../../../mkspecs/modules-inst/qt_plugin_qwebos.pri \
-		../../../../mkspecs/modules/qt_plugin_qwebos.pri \
 		../../../../mkspecs/modules/qt_tool_moc.pri \
 		../../../../mkspecs/modules/qt_tool_qdoc.pri \
 		../../../../mkspecs/modules/qt_tool_qlalr.pri \
@@ -170,19 +154,14 @@ DIST          = ../../../../mkspecs/features/spec_pre.prf \
 		../../../../mkspecs/features/qt.prf \
 		../../../../mkspecs/features/resources.prf \
 		../../../../mkspecs/features/moc.prf \
-		../../../../mkspecs/features/unix/opengl.prf \
 		../../../../mkspecs/features/unix/thread.prf \
 		../../../../mkspecs/features/testcase_targets.prf \
 		../../../../mkspecs/features/yacc.prf \
 		../../../../mkspecs/features/lex.prf \
 		linuxfb.pro qlinuxfbintegration.h \
-		qlinuxfbscreen.h \
-		sdlscreen_private.h \
-		sdlscreenthread.h main.cpp \
+		qlinuxfbscreen.h main.cpp \
 		qlinuxfbintegration.cpp \
-		qlinuxfbscreen.cpp \
-		sdlscreen_private.cpp \
-		sdlscreenthread.cpp
+		qlinuxfbscreen.cpp
 QMAKE_TARGET  = qlinuxfb
 DESTDIR       = ../../../../plugins/platforms/#avoid trailing-slash linebreak
 TARGET        = libqlinuxfb.so
@@ -228,129 +207,11 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 		../../../../mkspecs/common/g++-base.conf \
 		../../../../mkspecs/common/g++-unix.conf \
 		../../../../mkspecs/qconfig.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dcore.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dcore_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules/qt_lib_3dcore.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dinput.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dinput_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules/qt_lib_3dinput.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3drenderer.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3drenderer_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules/qt_lib_3drenderer.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_lib_declarative.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_lib_declarative_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_lib_declarative.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_plugin_qdeclarativeview.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_plugin_qdeclarativeview.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_plugin_qmldbg_inspector.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_plugin_qmldbg_inspector.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_plugin_qmldbg_tcp_qtdeclarative.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_plugin_qmldbg_tcp_qtdeclarative.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_tool_qml1plugindump.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_bluetooth.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_bluetooth_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules/qt_lib_bluetooth.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_nfc.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_nfc_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules/qt_lib_nfc.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimedia.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimedia_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_lib_multimedia.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimediawidgets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimediawidgets_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_lib_multimediawidgets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_qtmultimediaquicktools_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_plugin_qtmedia_audioengine.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_plugin_qtmedia_audioengine.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_plugin_qtmultimedia_m3u.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_plugin_qtmultimedia_m3u.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_script.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_script_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules/qt_lib_script.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_scripttools.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_scripttools_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules/qt_lib_scripttools.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_lib_svg.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_lib_svg_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules/qt_lib_svg.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_plugin_qsvg.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules/qt_plugin_qsvg.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_plugin_qsvgicon.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules/qt_plugin_qsvgicon.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_clucene_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_clucene_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_designer.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_designer_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_designer.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_designercomponents_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_designercomponents_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_help.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_help_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_help.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_uiplugin.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_uiplugin.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_uitools.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_uitools_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_uitools.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_plugin_qwebview.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_plugin_qwebview.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_lconvert.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_lrelease.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_lupdate.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_qcollectiongenerator.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_qhelpgenerator.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules-inst/qt_lib_xmlpatterns.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules-inst/qt_lib_xmlpatterns_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules/qt_lib_xmlpatterns.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules/qt_tool_xmlpatterns.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules/qt_tool_xmlpatternsvalidator.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qdds.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qdds.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qicns.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qicns.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qjp2.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qjp2.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qmng.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qmng.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qtga.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qtga.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qtiff.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qtiff.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qwbmp.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qwbmp.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qwebp.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qwebp.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkit.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkit_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules/qt_lib_webkit.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkitwidgets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkitwidgets_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules/qt_lib_webkitwidgets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebchannel/mkspecs/modules-inst/qt_lib_webchannel.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebchannel/mkspecs/modules-inst/qt_lib_webchannel_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebchannel/mkspecs/modules/qt_lib_webchannel.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebsockets/mkspecs/modules-inst/qt_lib_websockets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebsockets/mkspecs/modules-inst/qt_lib_websockets_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtwebsockets/mkspecs/modules/qt_lib_websockets.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qml.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qml_private.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_qml.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qmldevtools_private.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_qmldevtools_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qmltest.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qmltest_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_qmltest.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quick.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quick_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_quick.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quickparticles_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_quickparticles_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quickwidgets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quickwidgets_private.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_quickwidgets.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_plugin_qmldbg_qtquick2.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_plugin_qmldbg_qtquick2.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_plugin_qmldbg_tcp.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_plugin_qmldbg_tcp.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qml.pri \
@@ -358,10 +219,7 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmljs.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmllint.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlmin.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlplugindump.pri \
 		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlprofiler.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlscene.pri \
-		/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmltestrunner.pri \
 		../../../../mkspecs/modules-inst/qt_lib_bootstrap_private.pri \
 		../../../../mkspecs/modules/qt_lib_bootstrap_private.pri \
 		../../../../mkspecs/modules-inst/qt_lib_concurrent.pri \
@@ -376,12 +234,6 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 		../../../../mkspecs/modules-inst/qt_lib_network.pri \
 		../../../../mkspecs/modules-inst/qt_lib_network_private.pri \
 		../../../../mkspecs/modules/qt_lib_network.pri \
-		../../../../mkspecs/modules-inst/qt_lib_opengl.pri \
-		../../../../mkspecs/modules-inst/qt_lib_opengl_private.pri \
-		../../../../mkspecs/modules/qt_lib_opengl.pri \
-		../../../../mkspecs/modules-inst/qt_lib_openglextensions.pri \
-		../../../../mkspecs/modules-inst/qt_lib_openglextensions_private.pri \
-		../../../../mkspecs/modules/qt_lib_openglextensions.pri \
 		../../../../mkspecs/modules-inst/qt_lib_platformsupport_private.pri \
 		../../../../mkspecs/modules/qt_lib_platformsupport_private.pri \
 		../../../../mkspecs/modules-inst/qt_lib_printsupport.pri \
@@ -425,8 +277,6 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 		../../../../mkspecs/modules/qt_plugin_qsqlite.pri \
 		../../../../mkspecs/modules-inst/qt_plugin_qtuiotouchplugin.pri \
 		../../../../mkspecs/modules/qt_plugin_qtuiotouchplugin.pri \
-		../../../../mkspecs/modules-inst/qt_plugin_qwebos.pri \
-		../../../../mkspecs/modules/qt_plugin_qwebos.pri \
 		../../../../mkspecs/modules/qt_tool_moc.pri \
 		../../../../mkspecs/modules/qt_tool_qdoc.pri \
 		../../../../mkspecs/modules/qt_tool_qlalr.pri \
@@ -461,7 +311,6 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 		../../../../mkspecs/features/qt.prf \
 		../../../../mkspecs/features/resources.prf \
 		../../../../mkspecs/features/moc.prf \
-		../../../../mkspecs/features/unix/opengl.prf \
 		../../../../mkspecs/features/unix/thread.prf \
 		../../../../mkspecs/features/testcase_targets.prf \
 		../../../../mkspecs/features/yacc.prf \
@@ -481,129 +330,11 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 ../../../../mkspecs/common/g++-base.conf:
 ../../../../mkspecs/common/g++-unix.conf:
 ../../../../mkspecs/qconfig.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dcore.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dcore_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules/qt_lib_3dcore.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dinput.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3dinput_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules/qt_lib_3dinput.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3drenderer.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules-inst/qt_lib_3drenderer_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qt3d/mkspecs/modules/qt_lib_3drenderer.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_lib_declarative.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_lib_declarative_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_lib_declarative.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_plugin_qdeclarativeview.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_plugin_qdeclarativeview.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_plugin_qmldbg_inspector.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_plugin_qmldbg_inspector.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules-inst/qt_plugin_qmldbg_tcp_qtdeclarative.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_plugin_qmldbg_tcp_qtdeclarative.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtquick1/mkspecs/modules/qt_tool_qml1plugindump.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_bluetooth.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_bluetooth_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules/qt_lib_bluetooth.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_nfc.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules-inst/qt_lib_nfc_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtconnectivity/mkspecs/modules/qt_lib_nfc.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimedia.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimedia_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_lib_multimedia.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimediawidgets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_multimediawidgets_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_lib_multimediawidgets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_lib_qtmultimediaquicktools_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_lib_qtmultimediaquicktools_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_plugin_qtmedia_audioengine.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_plugin_qtmedia_audioengine.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules-inst/qt_plugin_qtmultimedia_m3u.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtmultimedia/mkspecs/modules/qt_plugin_qtmultimedia_m3u.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_script.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_script_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules/qt_lib_script.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_scripttools.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules-inst/qt_lib_scripttools_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtscript/mkspecs/modules/qt_lib_scripttools.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_lib_svg.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_lib_svg_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules/qt_lib_svg.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_plugin_qsvg.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules/qt_plugin_qsvg.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules-inst/qt_plugin_qsvgicon.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtsvg/mkspecs/modules/qt_plugin_qsvgicon.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_clucene_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_clucene_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_designer.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_designer_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_designer.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_designercomponents_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_designercomponents_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_help.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_help_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_help.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_uiplugin.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_uiplugin.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_uitools.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_lib_uitools_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_lib_uitools.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules-inst/qt_plugin_qwebview.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_plugin_qwebview.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_lconvert.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_lrelease.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_lupdate.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_qcollectiongenerator.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qttools/mkspecs/modules/qt_tool_qhelpgenerator.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules-inst/qt_lib_xmlpatterns.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules-inst/qt_lib_xmlpatterns_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules/qt_lib_xmlpatterns.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules/qt_tool_xmlpatterns.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtxmlpatterns/mkspecs/modules/qt_tool_xmlpatternsvalidator.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qdds.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qdds.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qicns.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qicns.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qjp2.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qjp2.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qmng.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qmng.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qtga.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qtga.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qtiff.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qtiff.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qwbmp.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qwbmp.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules-inst/qt_plugin_qwebp.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtimageformats/mkspecs/modules/qt_plugin_qwebp.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkit.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkit_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules/qt_lib_webkit.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkitwidgets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules-inst/qt_lib_webkitwidgets_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebkit/Tools/qmake/mkspecs/modules/qt_lib_webkitwidgets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebchannel/mkspecs/modules-inst/qt_lib_webchannel.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebchannel/mkspecs/modules-inst/qt_lib_webchannel_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebchannel/mkspecs/modules/qt_lib_webchannel.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebsockets/mkspecs/modules-inst/qt_lib_websockets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebsockets/mkspecs/modules-inst/qt_lib_websockets_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtwebsockets/mkspecs/modules/qt_lib_websockets.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qml.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qml_private.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_qml.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qmldevtools_private.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_qmldevtools_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qmltest.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_qmltest_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_qmltest.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quick.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quick_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_quick.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quickparticles_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_quickparticles_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quickwidgets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_lib_quickwidgets_private.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_lib_quickwidgets.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_plugin_qmldbg_qtquick2.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_plugin_qmldbg_qtquick2.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules-inst/qt_plugin_qmldbg_tcp.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_plugin_qmldbg_tcp.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qml.pri:
@@ -611,10 +342,7 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmljs.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmllint.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlmin.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlplugindump.pri:
 /opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlprofiler.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmlscene.pri:
-/opt/qt-everywhere-opensource-src-5.5.1/qtdeclarative/mkspecs/modules/qt_tool_qmltestrunner.pri:
 ../../../../mkspecs/modules-inst/qt_lib_bootstrap_private.pri:
 ../../../../mkspecs/modules/qt_lib_bootstrap_private.pri:
 ../../../../mkspecs/modules-inst/qt_lib_concurrent.pri:
@@ -629,12 +357,6 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 ../../../../mkspecs/modules-inst/qt_lib_network.pri:
 ../../../../mkspecs/modules-inst/qt_lib_network_private.pri:
 ../../../../mkspecs/modules/qt_lib_network.pri:
-../../../../mkspecs/modules-inst/qt_lib_opengl.pri:
-../../../../mkspecs/modules-inst/qt_lib_opengl_private.pri:
-../../../../mkspecs/modules/qt_lib_opengl.pri:
-../../../../mkspecs/modules-inst/qt_lib_openglextensions.pri:
-../../../../mkspecs/modules-inst/qt_lib_openglextensions_private.pri:
-../../../../mkspecs/modules/qt_lib_openglextensions.pri:
 ../../../../mkspecs/modules-inst/qt_lib_platformsupport_private.pri:
 ../../../../mkspecs/modules/qt_lib_platformsupport_private.pri:
 ../../../../mkspecs/modules-inst/qt_lib_printsupport.pri:
@@ -678,8 +400,6 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 ../../../../mkspecs/modules/qt_plugin_qsqlite.pri:
 ../../../../mkspecs/modules-inst/qt_plugin_qtuiotouchplugin.pri:
 ../../../../mkspecs/modules/qt_plugin_qtuiotouchplugin.pri:
-../../../../mkspecs/modules-inst/qt_plugin_qwebos.pri:
-../../../../mkspecs/modules/qt_plugin_qwebos.pri:
 ../../../../mkspecs/modules/qt_tool_moc.pri:
 ../../../../mkspecs/modules/qt_tool_qdoc.pri:
 ../../../../mkspecs/modules/qt_tool_qlalr.pri:
@@ -714,7 +434,6 @@ Makefile: linuxfb.pro ../../../../.qmake.conf ../../../../.qmake.cache ../../../
 ../../../../mkspecs/features/qt.prf:
 ../../../../mkspecs/features/resources.prf:
 ../../../../mkspecs/features/moc.prf:
-../../../../mkspecs/features/unix/opengl.prf:
 ../../../../mkspecs/features/unix/thread.prf:
 ../../../../mkspecs/features/testcase_targets.prf:
 ../../../../mkspecs/features/yacc.prf:
@@ -738,8 +457,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents qlinuxfbintegration.h qlinuxfbscreen.h sdlscreen_private.h sdlscreenthread.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp qlinuxfbintegration.cpp qlinuxfbscreen.cpp sdlscreen_private.cpp sdlscreenthread.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents qlinuxfbintegration.h qlinuxfbscreen.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp qlinuxfbintegration.cpp qlinuxfbscreen.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -787,9 +506,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: .moc/moc_qlinuxfbscreen.cpp .moc/moc_sdlscreen_private.cpp .moc/moc_sdlscreenthread.cpp
+compiler_moc_header_make_all: .moc/moc_qlinuxfbscreen.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) .moc/moc_qlinuxfbscreen.cpp .moc/moc_sdlscreen_private.cpp .moc/moc_sdlscreenthread.cpp
+	-$(DEL_FILE) .moc/moc_qlinuxfbscreen.cpp
 .moc/moc_qlinuxfbscreen.cpp: ../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qfbscreen_p.h \
 		../../../platformsupport/fbconvenience/qfbscreen_p.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformscreen.h \
@@ -1001,229 +720,8 @@ compiler_moc_header_clean:
 		../../../../include/QtGui/QCursor \
 		../../../../include/QtGui/5.5.1/QtGui/private/qinputdevicemanager_p.h \
 		../../../gui/kernel/qinputdevicemanager_p.h \
-		sdlscreen_private.h \
-		../../../../include/QtCore/QMutex \
 		qlinuxfbscreen.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include qlinuxfbscreen.h -o .moc/moc_qlinuxfbscreen.cpp
-
-.moc/moc_sdlscreen_private.cpp: ../../../../include/QtCore/QObject \
-		../../../../include/QtCore/qobject.h \
-		../../../corelib/kernel/qobject.h \
-		../../../../include/QtCore/qobjectdefs.h \
-		../../../corelib/kernel/qobjectdefs.h \
-		../../../../include/QtCore/qnamespace.h \
-		../../../corelib/global/qnamespace.h \
-		../../../../include/QtCore/qglobal.h \
-		../../../corelib/global/qglobal.h \
-		../../../../include/QtCore/qconfig.h \
-		../../../corelib/global/qconfig.h \
-		../../../../include/QtCore/qfeatures.h \
-		../../../corelib/global/qfeatures.h \
-		../../../../include/QtCore/qsystemdetection.h \
-		../../../corelib/global/qsystemdetection.h \
-		../../../../include/QtCore/qprocessordetection.h \
-		../../../corelib/global/qprocessordetection.h \
-		../../../../include/QtCore/qcompilerdetection.h \
-		../../../corelib/global/qcompilerdetection.h \
-		../../../../include/QtCore/qtypeinfo.h \
-		../../../corelib/global/qtypeinfo.h \
-		../../../../include/QtCore/qtypetraits.h \
-		../../../corelib/global/qtypetraits.h \
-		../../../../include/QtCore/qsysinfo.h \
-		../../../corelib/global/qsysinfo.h \
-		../../../../include/QtCore/qlogging.h \
-		../../../corelib/global/qlogging.h \
-		../../../../include/QtCore/qflags.h \
-		../../../corelib/global/qflags.h \
-		../../../../include/QtCore/qatomic.h \
-		../../../corelib/thread/qatomic.h \
-		../../../../include/QtCore/qbasicatomic.h \
-		../../../corelib/thread/qbasicatomic.h \
-		../../../../include/QtCore/qatomic_bootstrap.h \
-		../../../corelib/arch/qatomic_bootstrap.h \
-		../../../../include/QtCore/qgenericatomic.h \
-		../../../corelib/thread/qgenericatomic.h \
-		../../../../include/QtCore/qatomic_cxx11.h \
-		../../../corelib/arch/qatomic_cxx11.h \
-		../../../../include/QtCore/qatomic_gcc.h \
-		../../../corelib/arch/qatomic_gcc.h \
-		../../../../include/QtCore/qatomic_msvc.h \
-		../../../corelib/arch/qatomic_msvc.h \
-		../../../../include/QtCore/qatomic_armv7.h \
-		../../../corelib/arch/qatomic_armv7.h \
-		../../../../include/QtCore/qatomic_armv6.h \
-		../../../corelib/arch/qatomic_armv6.h \
-		../../../../include/QtCore/qatomic_armv5.h \
-		../../../corelib/arch/qatomic_armv5.h \
-		../../../../include/QtCore/qatomic_ia64.h \
-		../../../corelib/arch/qatomic_ia64.h \
-		../../../../include/QtCore/qatomic_mips.h \
-		../../../corelib/arch/qatomic_mips.h \
-		../../../../include/QtCore/qatomic_x86.h \
-		../../../corelib/arch/qatomic_x86.h \
-		../../../../include/QtCore/qatomic_unix.h \
-		../../../corelib/arch/qatomic_unix.h \
-		../../../../include/QtCore/qglobalstatic.h \
-		../../../corelib/global/qglobalstatic.h \
-		../../../../include/QtCore/qmutex.h \
-		../../../corelib/thread/qmutex.h \
-		../../../../include/QtCore/qnumeric.h \
-		../../../corelib/global/qnumeric.h \
-		../../../../include/QtCore/qobjectdefs_impl.h \
-		../../../corelib/kernel/qobjectdefs_impl.h \
-		../../../../include/QtCore/qstring.h \
-		../../../corelib/tools/qstring.h \
-		../../../../include/QtCore/qchar.h \
-		../../../corelib/tools/qchar.h \
-		../../../../include/QtCore/qbytearray.h \
-		../../../corelib/tools/qbytearray.h \
-		../../../../include/QtCore/qrefcount.h \
-		../../../corelib/tools/qrefcount.h \
-		../../../../include/QtCore/qarraydata.h \
-		../../../corelib/tools/qarraydata.h \
-		../../../../include/QtCore/qstringbuilder.h \
-		../../../corelib/tools/qstringbuilder.h \
-		../../../../include/QtCore/qlist.h \
-		../../../corelib/tools/qlist.h \
-		../../../../include/QtCore/qalgorithms.h \
-		../../../corelib/tools/qalgorithms.h \
-		../../../../include/QtCore/qiterator.h \
-		../../../corelib/tools/qiterator.h \
-		../../../../include/QtCore/qbytearraylist.h \
-		../../../corelib/tools/qbytearraylist.h \
-		../../../../include/QtCore/qstringlist.h \
-		../../../corelib/tools/qstringlist.h \
-		../../../../include/QtCore/qregexp.h \
-		../../../corelib/tools/qregexp.h \
-		../../../../include/QtCore/qstringmatcher.h \
-		../../../corelib/tools/qstringmatcher.h \
-		../../../../include/QtCore/qcoreevent.h \
-		../../../corelib/kernel/qcoreevent.h \
-		../../../../include/QtCore/qscopedpointer.h \
-		../../../corelib/tools/qscopedpointer.h \
-		../../../../include/QtCore/qmetatype.h \
-		../../../corelib/kernel/qmetatype.h \
-		../../../../include/QtCore/qvarlengtharray.h \
-		../../../corelib/tools/qvarlengtharray.h \
-		../../../../include/QtCore/qcontainerfwd.h \
-		../../../corelib/tools/qcontainerfwd.h \
-		../../../../include/QtCore/qisenum.h \
-		../../../corelib/global/qisenum.h \
-		../../../../include/QtCore/qobject_impl.h \
-		../../../corelib/kernel/qobject_impl.h \
-		../../../../include/QtCore/QMutex \
-		sdlscreen_private.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include sdlscreen_private.h -o .moc/moc_sdlscreen_private.cpp
-
-.moc/moc_sdlscreenthread.cpp: ../../../../include/QtCore/QThread \
-		../../../../include/QtCore/qthread.h \
-		../../../corelib/thread/qthread.h \
-		../../../../include/QtCore/qobject.h \
-		../../../corelib/kernel/qobject.h \
-		../../../../include/QtCore/qobjectdefs.h \
-		../../../corelib/kernel/qobjectdefs.h \
-		../../../../include/QtCore/qnamespace.h \
-		../../../corelib/global/qnamespace.h \
-		../../../../include/QtCore/qglobal.h \
-		../../../corelib/global/qglobal.h \
-		../../../../include/QtCore/qconfig.h \
-		../../../corelib/global/qconfig.h \
-		../../../../include/QtCore/qfeatures.h \
-		../../../corelib/global/qfeatures.h \
-		../../../../include/QtCore/qsystemdetection.h \
-		../../../corelib/global/qsystemdetection.h \
-		../../../../include/QtCore/qprocessordetection.h \
-		../../../corelib/global/qprocessordetection.h \
-		../../../../include/QtCore/qcompilerdetection.h \
-		../../../corelib/global/qcompilerdetection.h \
-		../../../../include/QtCore/qtypeinfo.h \
-		../../../corelib/global/qtypeinfo.h \
-		../../../../include/QtCore/qtypetraits.h \
-		../../../corelib/global/qtypetraits.h \
-		../../../../include/QtCore/qsysinfo.h \
-		../../../corelib/global/qsysinfo.h \
-		../../../../include/QtCore/qlogging.h \
-		../../../corelib/global/qlogging.h \
-		../../../../include/QtCore/qflags.h \
-		../../../corelib/global/qflags.h \
-		../../../../include/QtCore/qatomic.h \
-		../../../corelib/thread/qatomic.h \
-		../../../../include/QtCore/qbasicatomic.h \
-		../../../corelib/thread/qbasicatomic.h \
-		../../../../include/QtCore/qatomic_bootstrap.h \
-		../../../corelib/arch/qatomic_bootstrap.h \
-		../../../../include/QtCore/qgenericatomic.h \
-		../../../corelib/thread/qgenericatomic.h \
-		../../../../include/QtCore/qatomic_cxx11.h \
-		../../../corelib/arch/qatomic_cxx11.h \
-		../../../../include/QtCore/qatomic_gcc.h \
-		../../../corelib/arch/qatomic_gcc.h \
-		../../../../include/QtCore/qatomic_msvc.h \
-		../../../corelib/arch/qatomic_msvc.h \
-		../../../../include/QtCore/qatomic_armv7.h \
-		../../../corelib/arch/qatomic_armv7.h \
-		../../../../include/QtCore/qatomic_armv6.h \
-		../../../corelib/arch/qatomic_armv6.h \
-		../../../../include/QtCore/qatomic_armv5.h \
-		../../../corelib/arch/qatomic_armv5.h \
-		../../../../include/QtCore/qatomic_ia64.h \
-		../../../corelib/arch/qatomic_ia64.h \
-		../../../../include/QtCore/qatomic_mips.h \
-		../../../corelib/arch/qatomic_mips.h \
-		../../../../include/QtCore/qatomic_x86.h \
-		../../../corelib/arch/qatomic_x86.h \
-		../../../../include/QtCore/qatomic_unix.h \
-		../../../corelib/arch/qatomic_unix.h \
-		../../../../include/QtCore/qglobalstatic.h \
-		../../../corelib/global/qglobalstatic.h \
-		../../../../include/QtCore/qmutex.h \
-		../../../corelib/thread/qmutex.h \
-		../../../../include/QtCore/qnumeric.h \
-		../../../corelib/global/qnumeric.h \
-		../../../../include/QtCore/qobjectdefs_impl.h \
-		../../../corelib/kernel/qobjectdefs_impl.h \
-		../../../../include/QtCore/qstring.h \
-		../../../corelib/tools/qstring.h \
-		../../../../include/QtCore/qchar.h \
-		../../../corelib/tools/qchar.h \
-		../../../../include/QtCore/qbytearray.h \
-		../../../corelib/tools/qbytearray.h \
-		../../../../include/QtCore/qrefcount.h \
-		../../../corelib/tools/qrefcount.h \
-		../../../../include/QtCore/qarraydata.h \
-		../../../corelib/tools/qarraydata.h \
-		../../../../include/QtCore/qstringbuilder.h \
-		../../../corelib/tools/qstringbuilder.h \
-		../../../../include/QtCore/qlist.h \
-		../../../corelib/tools/qlist.h \
-		../../../../include/QtCore/qalgorithms.h \
-		../../../corelib/tools/qalgorithms.h \
-		../../../../include/QtCore/qiterator.h \
-		../../../corelib/tools/qiterator.h \
-		../../../../include/QtCore/qbytearraylist.h \
-		../../../corelib/tools/qbytearraylist.h \
-		../../../../include/QtCore/qstringlist.h \
-		../../../corelib/tools/qstringlist.h \
-		../../../../include/QtCore/qregexp.h \
-		../../../corelib/tools/qregexp.h \
-		../../../../include/QtCore/qstringmatcher.h \
-		../../../corelib/tools/qstringmatcher.h \
-		../../../../include/QtCore/qcoreevent.h \
-		../../../corelib/kernel/qcoreevent.h \
-		../../../../include/QtCore/qscopedpointer.h \
-		../../../corelib/tools/qscopedpointer.h \
-		../../../../include/QtCore/qmetatype.h \
-		../../../corelib/kernel/qmetatype.h \
-		../../../../include/QtCore/qvarlengtharray.h \
-		../../../corelib/tools/qvarlengtharray.h \
-		../../../../include/QtCore/qcontainerfwd.h \
-		../../../corelib/tools/qcontainerfwd.h \
-		../../../../include/QtCore/qisenum.h \
-		../../../corelib/global/qisenum.h \
-		../../../../include/QtCore/qobject_impl.h \
-		../../../corelib/kernel/qobject_impl.h \
-		sdlscreenthread.h
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include sdlscreenthread.h -o .moc/moc_sdlscreenthread.cpp
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include qlinuxfbscreen.h -o .moc/moc_qlinuxfbscreen.cpp
 
 compiler_moc_source_make_all: .moc/main.moc
 compiler_moc_source_clean:
@@ -1433,7 +931,6 @@ compiler_moc_source_clean:
 		/opt/PalmPDK/include/GLES2/gl2.h \
 		../../../../include/QtGui/qopengles2ext.h \
 		../../../gui/opengl/qopengles2ext.h \
-		../../../gui/opengl/khrplatform.h \
 		../../../../include/QtGui/qopenglext.h \
 		../../../gui/opengl/qopenglext.h \
 		../../../../include/QtGui/qopenglversionfunctions.h \
@@ -1442,7 +939,7 @@ compiler_moc_source_clean:
 		../../../gui/kernel/qplatformnativeinterface.h \
 		../../../../include/QtCore/QVariant \
 		main.cpp
-	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig.4.3.3/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig.4.3.3/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include main.cpp -o .moc/main.moc
+	/opt/qt-everywhere-opensource-src-5.5.1/qtbase/bin/moc $(DEFINES) -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/mkspecs/linux-arm-gnueabi-g++ -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/src/plugins/platforms/linuxfb -I/opt/PalmPDK/include -I/opt/PalmPDK/include/openssl -I/opt/PalmPDK/include/openpng12 -I/opt/PalmPDK/include/GLES -I/opt/PalmPDK/include/GLES2 -I/opt/PalmPDK/include/SDL -I/opt/PalmPDK/arm-gcc/arm-none-linux-gnueabi/libc/usr/include -I/opt/dbus/runtime/include -I/opt/expat/runtime/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtPlatformSupport/5.5.1/QtPlatformSupport -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui/5.5.1/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtGui -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1 -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore/5.5.1/QtCore -I/opt/qt-everywhere-opensource-src-5.5.1/qtbase/include/QtCore -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include/c++/4.3.3 -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include/c++/4.3.3/arm-none-linux-gnueabi -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include/c++/4.3.3/backward -I/opt/PalmPDK/arm-gcc.orig/lib/gcc/arm-none-linux-gnueabi/4.3.3/include -I/opt/PalmPDK/arm-gcc.orig/lib/gcc/arm-none-linux-gnueabi/4.3.3/include-fixed -I/opt/PalmPDK/arm-gcc.orig/arm-none-linux-gnueabi/include -I/opt/PalmPDK/arm-gcc/sysroot/usr/include main.cpp -o .moc/main.moc
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -1659,7 +1156,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		/opt/PalmPDK/include/GLES2/gl2.h \
 		../../../../include/QtGui/qopengles2ext.h \
 		../../../gui/opengl/qopengles2ext.h \
-		../../../gui/opengl/khrplatform.h \
 		../../../../include/QtGui/qopenglext.h \
 		../../../gui/opengl/qopenglext.h \
 		../../../../include/QtGui/qopenglversionfunctions.h \
@@ -1863,7 +1359,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		/opt/PalmPDK/include/GLES2/gl2.h \
 		../../../../include/QtGui/qopengles2ext.h \
 		../../../gui/opengl/qopengles2ext.h \
-		../../../gui/opengl/khrplatform.h \
 		../../../../include/QtGui/qopenglext.h \
 		../../../gui/opengl/qopenglext.h \
 		../../../../include/QtGui/qopenglversionfunctions.h \
@@ -1906,8 +1401,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../../include/QtGui/QCursor \
 		../../../../include/QtGui/5.5.1/QtGui/private/qinputdevicemanager_p.h \
 		../../../gui/kernel/qinputdevicemanager_p.h \
-		sdlscreen_private.h \
-		../../../../include/QtCore/QMutex \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qgenericunixfontdatabase_p.h \
 		../../../platformsupport/fontdatabases/genericunix/qgenericunixfontdatabase_p.h \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qfontconfigdatabase_p.h \
@@ -2012,6 +1505,7 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../gui/kernel/qsurface.h \
 		../../../../include/QtGui/qicon.h \
 		../../../gui/image/qicon.h \
+		../../../../include/QtCore/QMutex \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qfbwindow_p.h \
 		../../../platformsupport/fbconvenience/qfbwindow_p.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformwindow.h \
@@ -2096,33 +1590,7 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../platformsupport/input/tslib/qtslib_p.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/qlinuxfbintegration.o qlinuxfbintegration.cpp
 
-.obj/qlinuxfbscreen.o: qlinuxfbscreen.cpp /opt/PalmPDK/include/SDL/SDL.h \
-		/opt/PalmPDK/include/SDL/SDL_main.h \
-		/opt/PalmPDK/include/SDL/SDL_stdinc.h \
-		/opt/PalmPDK/include/SDL/SDL_config.h \
-		/opt/PalmPDK/include/SDL/SDL_platform.h \
-		/opt/PalmPDK/include/SDL/begin_code.h \
-		/opt/PalmPDK/include/SDL/close_code.h \
-		/opt/PalmPDK/include/SDL/SDL_audio.h \
-		/opt/PalmPDK/include/SDL/SDL_error.h \
-		/opt/PalmPDK/include/SDL/SDL_endian.h \
-		/opt/PalmPDK/include/SDL/SDL_mutex.h \
-		/opt/PalmPDK/include/SDL/SDL_thread.h \
-		/opt/PalmPDK/include/SDL/SDL_rwops.h \
-		/opt/PalmPDK/include/SDL/SDL_cdrom.h \
-		/opt/PalmPDK/include/SDL/SDL_cpuinfo.h \
-		/opt/PalmPDK/include/SDL/SDL_events.h \
-		/opt/PalmPDK/include/SDL/SDL_active.h \
-		/opt/PalmPDK/include/SDL/SDL_keyboard.h \
-		/opt/PalmPDK/include/SDL/SDL_keysym.h \
-		/opt/PalmPDK/include/SDL/SDL_mouse.h \
-		/opt/PalmPDK/include/SDL/SDL_video.h \
-		/opt/PalmPDK/include/SDL/SDL_joystick.h \
-		/opt/PalmPDK/include/SDL/SDL_quit.h \
-		/opt/PalmPDK/include/SDL/SDL_loadso.h \
-		/opt/PalmPDK/include/SDL/SDL_timer.h \
-		/opt/PalmPDK/include/SDL/SDL_version.h \
-		qlinuxfbscreen.h \
+.obj/qlinuxfbscreen.o: qlinuxfbscreen.cpp qlinuxfbscreen.h \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qfbscreen_p.h \
 		../../../platformsupport/fbconvenience/qfbscreen_p.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformscreen.h \
@@ -2334,8 +1802,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../../include/QtGui/QCursor \
 		../../../../include/QtGui/5.5.1/QtGui/private/qinputdevicemanager_p.h \
 		../../../gui/kernel/qinputdevicemanager_p.h \
-		sdlscreen_private.h \
-		../../../../include/QtCore/QMutex \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qfbcursor_p.h \
 		../../../../include/QtPlatformSupport/5.5.1/QtPlatformSupport/private/qfbwindow_p.h \
 		../../../platformsupport/fbconvenience/qfbwindow_p.h \
@@ -2361,7 +1827,6 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		/opt/PalmPDK/include/GLES2/gl2.h \
 		../../../../include/QtGui/qopengles2ext.h \
 		../../../gui/opengl/qopengles2ext.h \
-		../../../gui/opengl/khrplatform.h \
 		../../../../include/QtGui/qopenglext.h \
 		../../../gui/opengl/qopenglext.h \
 		../../../../include/QtGui/5.5.1/QtGui/qpa/qplatformsurface.h \
@@ -2392,266 +1857,8 @@ compiler_clean: compiler_moc_header_clean compiler_moc_source_clean
 		../../../../mkspecs/common/c89/qplatformdefs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/qlinuxfbscreen.o qlinuxfbscreen.cpp
 
-.obj/sdlscreen_private.o: sdlscreen_private.cpp sdlscreen_private.h \
-		../../../../include/QtCore/QObject \
-		../../../../include/QtCore/qobject.h \
-		../../../corelib/kernel/qobject.h \
-		../../../../include/QtCore/qobjectdefs.h \
-		../../../corelib/kernel/qobjectdefs.h \
-		../../../../include/QtCore/qnamespace.h \
-		../../../corelib/global/qnamespace.h \
-		../../../../include/QtCore/qglobal.h \
-		../../../corelib/global/qglobal.h \
-		../../../../include/QtCore/qconfig.h \
-		../../../corelib/global/qconfig.h \
-		../../../../include/QtCore/qfeatures.h \
-		../../../corelib/global/qfeatures.h \
-		../../../../include/QtCore/qsystemdetection.h \
-		../../../corelib/global/qsystemdetection.h \
-		../../../../include/QtCore/qprocessordetection.h \
-		../../../corelib/global/qprocessordetection.h \
-		../../../../include/QtCore/qcompilerdetection.h \
-		../../../corelib/global/qcompilerdetection.h \
-		../../../../include/QtCore/qtypeinfo.h \
-		../../../corelib/global/qtypeinfo.h \
-		../../../../include/QtCore/qtypetraits.h \
-		../../../corelib/global/qtypetraits.h \
-		../../../../include/QtCore/qsysinfo.h \
-		../../../corelib/global/qsysinfo.h \
-		../../../../include/QtCore/qlogging.h \
-		../../../corelib/global/qlogging.h \
-		../../../../include/QtCore/qflags.h \
-		../../../corelib/global/qflags.h \
-		../../../../include/QtCore/qatomic.h \
-		../../../corelib/thread/qatomic.h \
-		../../../../include/QtCore/qbasicatomic.h \
-		../../../corelib/thread/qbasicatomic.h \
-		../../../../include/QtCore/qatomic_bootstrap.h \
-		../../../corelib/arch/qatomic_bootstrap.h \
-		../../../../include/QtCore/qgenericatomic.h \
-		../../../corelib/thread/qgenericatomic.h \
-		../../../../include/QtCore/qatomic_cxx11.h \
-		../../../corelib/arch/qatomic_cxx11.h \
-		../../../../include/QtCore/qatomic_gcc.h \
-		../../../corelib/arch/qatomic_gcc.h \
-		../../../../include/QtCore/qatomic_msvc.h \
-		../../../corelib/arch/qatomic_msvc.h \
-		../../../../include/QtCore/qatomic_armv7.h \
-		../../../corelib/arch/qatomic_armv7.h \
-		../../../../include/QtCore/qatomic_armv6.h \
-		../../../corelib/arch/qatomic_armv6.h \
-		../../../../include/QtCore/qatomic_armv5.h \
-		../../../corelib/arch/qatomic_armv5.h \
-		../../../../include/QtCore/qatomic_ia64.h \
-		../../../corelib/arch/qatomic_ia64.h \
-		../../../../include/QtCore/qatomic_mips.h \
-		../../../corelib/arch/qatomic_mips.h \
-		../../../../include/QtCore/qatomic_x86.h \
-		../../../corelib/arch/qatomic_x86.h \
-		../../../../include/QtCore/qatomic_unix.h \
-		../../../corelib/arch/qatomic_unix.h \
-		../../../../include/QtCore/qglobalstatic.h \
-		../../../corelib/global/qglobalstatic.h \
-		../../../../include/QtCore/qmutex.h \
-		../../../corelib/thread/qmutex.h \
-		../../../../include/QtCore/qnumeric.h \
-		../../../corelib/global/qnumeric.h \
-		../../../../include/QtCore/qobjectdefs_impl.h \
-		../../../corelib/kernel/qobjectdefs_impl.h \
-		../../../../include/QtCore/qstring.h \
-		../../../corelib/tools/qstring.h \
-		../../../../include/QtCore/qchar.h \
-		../../../corelib/tools/qchar.h \
-		../../../../include/QtCore/qbytearray.h \
-		../../../corelib/tools/qbytearray.h \
-		../../../../include/QtCore/qrefcount.h \
-		../../../corelib/tools/qrefcount.h \
-		../../../../include/QtCore/qarraydata.h \
-		../../../corelib/tools/qarraydata.h \
-		../../../../include/QtCore/qstringbuilder.h \
-		../../../corelib/tools/qstringbuilder.h \
-		../../../../include/QtCore/qlist.h \
-		../../../corelib/tools/qlist.h \
-		../../../../include/QtCore/qalgorithms.h \
-		../../../corelib/tools/qalgorithms.h \
-		../../../../include/QtCore/qiterator.h \
-		../../../corelib/tools/qiterator.h \
-		../../../../include/QtCore/qbytearraylist.h \
-		../../../corelib/tools/qbytearraylist.h \
-		../../../../include/QtCore/qstringlist.h \
-		../../../corelib/tools/qstringlist.h \
-		../../../../include/QtCore/qregexp.h \
-		../../../corelib/tools/qregexp.h \
-		../../../../include/QtCore/qstringmatcher.h \
-		../../../corelib/tools/qstringmatcher.h \
-		../../../../include/QtCore/qcoreevent.h \
-		../../../corelib/kernel/qcoreevent.h \
-		../../../../include/QtCore/qscopedpointer.h \
-		../../../corelib/tools/qscopedpointer.h \
-		../../../../include/QtCore/qmetatype.h \
-		../../../corelib/kernel/qmetatype.h \
-		../../../../include/QtCore/qvarlengtharray.h \
-		../../../corelib/tools/qvarlengtharray.h \
-		../../../../include/QtCore/qcontainerfwd.h \
-		../../../corelib/tools/qcontainerfwd.h \
-		../../../../include/QtCore/qisenum.h \
-		../../../corelib/global/qisenum.h \
-		../../../../include/QtCore/qobject_impl.h \
-		../../../corelib/kernel/qobject_impl.h \
-		../../../../include/QtCore/QMutex \
-		sdlscreenthread.h \
-		../../../../include/QtCore/QThread \
-		../../../../include/QtCore/qthread.h \
-		../../../corelib/thread/qthread.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/sdlscreen_private.o sdlscreen_private.cpp
-
-.obj/sdlscreenthread.o: sdlscreenthread.cpp /opt/PalmPDK/include/SDL/SDL.h \
-		/opt/PalmPDK/include/SDL/SDL_main.h \
-		/opt/PalmPDK/include/SDL/SDL_stdinc.h \
-		/opt/PalmPDK/include/SDL/SDL_config.h \
-		/opt/PalmPDK/include/SDL/SDL_platform.h \
-		/opt/PalmPDK/include/SDL/begin_code.h \
-		/opt/PalmPDK/include/SDL/close_code.h \
-		/opt/PalmPDK/include/SDL/SDL_audio.h \
-		/opt/PalmPDK/include/SDL/SDL_error.h \
-		/opt/PalmPDK/include/SDL/SDL_endian.h \
-		/opt/PalmPDK/include/SDL/SDL_mutex.h \
-		/opt/PalmPDK/include/SDL/SDL_thread.h \
-		/opt/PalmPDK/include/SDL/SDL_rwops.h \
-		/opt/PalmPDK/include/SDL/SDL_cdrom.h \
-		/opt/PalmPDK/include/SDL/SDL_cpuinfo.h \
-		/opt/PalmPDK/include/SDL/SDL_events.h \
-		/opt/PalmPDK/include/SDL/SDL_active.h \
-		/opt/PalmPDK/include/SDL/SDL_keyboard.h \
-		/opt/PalmPDK/include/SDL/SDL_keysym.h \
-		/opt/PalmPDK/include/SDL/SDL_mouse.h \
-		/opt/PalmPDK/include/SDL/SDL_video.h \
-		/opt/PalmPDK/include/SDL/SDL_joystick.h \
-		/opt/PalmPDK/include/SDL/SDL_quit.h \
-		/opt/PalmPDK/include/SDL/SDL_loadso.h \
-		/opt/PalmPDK/include/SDL/SDL_timer.h \
-		/opt/PalmPDK/include/SDL/SDL_version.h \
-		sdlscreenthread.h \
-		../../../../include/QtCore/QThread \
-		../../../../include/QtCore/qthread.h \
-		../../../corelib/thread/qthread.h \
-		../../../../include/QtCore/qobject.h \
-		../../../corelib/kernel/qobject.h \
-		../../../../include/QtCore/qobjectdefs.h \
-		../../../corelib/kernel/qobjectdefs.h \
-		../../../../include/QtCore/qnamespace.h \
-		../../../corelib/global/qnamespace.h \
-		../../../../include/QtCore/qglobal.h \
-		../../../corelib/global/qglobal.h \
-		../../../../include/QtCore/qconfig.h \
-		../../../corelib/global/qconfig.h \
-		../../../../include/QtCore/qfeatures.h \
-		../../../corelib/global/qfeatures.h \
-		../../../../include/QtCore/qsystemdetection.h \
-		../../../corelib/global/qsystemdetection.h \
-		../../../../include/QtCore/qprocessordetection.h \
-		../../../corelib/global/qprocessordetection.h \
-		../../../../include/QtCore/qcompilerdetection.h \
-		../../../corelib/global/qcompilerdetection.h \
-		../../../../include/QtCore/qtypeinfo.h \
-		../../../corelib/global/qtypeinfo.h \
-		../../../../include/QtCore/qtypetraits.h \
-		../../../corelib/global/qtypetraits.h \
-		../../../../include/QtCore/qsysinfo.h \
-		../../../corelib/global/qsysinfo.h \
-		../../../../include/QtCore/qlogging.h \
-		../../../corelib/global/qlogging.h \
-		../../../../include/QtCore/qflags.h \
-		../../../corelib/global/qflags.h \
-		../../../../include/QtCore/qatomic.h \
-		../../../corelib/thread/qatomic.h \
-		../../../../include/QtCore/qbasicatomic.h \
-		../../../corelib/thread/qbasicatomic.h \
-		../../../../include/QtCore/qatomic_bootstrap.h \
-		../../../corelib/arch/qatomic_bootstrap.h \
-		../../../../include/QtCore/qgenericatomic.h \
-		../../../corelib/thread/qgenericatomic.h \
-		../../../../include/QtCore/qatomic_cxx11.h \
-		../../../corelib/arch/qatomic_cxx11.h \
-		../../../../include/QtCore/qatomic_gcc.h \
-		../../../corelib/arch/qatomic_gcc.h \
-		../../../../include/QtCore/qatomic_msvc.h \
-		../../../corelib/arch/qatomic_msvc.h \
-		../../../../include/QtCore/qatomic_armv7.h \
-		../../../corelib/arch/qatomic_armv7.h \
-		../../../../include/QtCore/qatomic_armv6.h \
-		../../../corelib/arch/qatomic_armv6.h \
-		../../../../include/QtCore/qatomic_armv5.h \
-		../../../corelib/arch/qatomic_armv5.h \
-		../../../../include/QtCore/qatomic_ia64.h \
-		../../../corelib/arch/qatomic_ia64.h \
-		../../../../include/QtCore/qatomic_mips.h \
-		../../../corelib/arch/qatomic_mips.h \
-		../../../../include/QtCore/qatomic_x86.h \
-		../../../corelib/arch/qatomic_x86.h \
-		../../../../include/QtCore/qatomic_unix.h \
-		../../../corelib/arch/qatomic_unix.h \
-		../../../../include/QtCore/qglobalstatic.h \
-		../../../corelib/global/qglobalstatic.h \
-		../../../../include/QtCore/qmutex.h \
-		../../../corelib/thread/qmutex.h \
-		../../../../include/QtCore/qnumeric.h \
-		../../../corelib/global/qnumeric.h \
-		../../../../include/QtCore/qobjectdefs_impl.h \
-		../../../corelib/kernel/qobjectdefs_impl.h \
-		../../../../include/QtCore/qstring.h \
-		../../../corelib/tools/qstring.h \
-		../../../../include/QtCore/qchar.h \
-		../../../corelib/tools/qchar.h \
-		../../../../include/QtCore/qbytearray.h \
-		../../../corelib/tools/qbytearray.h \
-		../../../../include/QtCore/qrefcount.h \
-		../../../corelib/tools/qrefcount.h \
-		../../../../include/QtCore/qarraydata.h \
-		../../../corelib/tools/qarraydata.h \
-		../../../../include/QtCore/qstringbuilder.h \
-		../../../corelib/tools/qstringbuilder.h \
-		../../../../include/QtCore/qlist.h \
-		../../../corelib/tools/qlist.h \
-		../../../../include/QtCore/qalgorithms.h \
-		../../../corelib/tools/qalgorithms.h \
-		../../../../include/QtCore/qiterator.h \
-		../../../corelib/tools/qiterator.h \
-		../../../../include/QtCore/qbytearraylist.h \
-		../../../corelib/tools/qbytearraylist.h \
-		../../../../include/QtCore/qstringlist.h \
-		../../../corelib/tools/qstringlist.h \
-		../../../../include/QtCore/qregexp.h \
-		../../../corelib/tools/qregexp.h \
-		../../../../include/QtCore/qstringmatcher.h \
-		../../../corelib/tools/qstringmatcher.h \
-		../../../../include/QtCore/qcoreevent.h \
-		../../../corelib/kernel/qcoreevent.h \
-		../../../../include/QtCore/qscopedpointer.h \
-		../../../corelib/tools/qscopedpointer.h \
-		../../../../include/QtCore/qmetatype.h \
-		../../../corelib/kernel/qmetatype.h \
-		../../../../include/QtCore/qvarlengtharray.h \
-		../../../corelib/tools/qvarlengtharray.h \
-		../../../../include/QtCore/qcontainerfwd.h \
-		../../../corelib/tools/qcontainerfwd.h \
-		../../../../include/QtCore/qisenum.h \
-		../../../corelib/global/qisenum.h \
-		../../../../include/QtCore/qobject_impl.h \
-		../../../corelib/kernel/qobject_impl.h \
-		sdlscreen_private.h \
-		../../../../include/QtCore/QObject \
-		../../../../include/QtCore/QMutex
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/sdlscreenthread.o sdlscreenthread.cpp
-
 .obj/moc_qlinuxfbscreen.o: .moc/moc_qlinuxfbscreen.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/moc_qlinuxfbscreen.o .moc/moc_qlinuxfbscreen.cpp
-
-.obj/moc_sdlscreen_private.o: .moc/moc_sdlscreen_private.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/moc_sdlscreen_private.o .moc/moc_sdlscreen_private.cpp
-
-.obj/moc_sdlscreenthread.o: .moc/moc_sdlscreenthread.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/moc_sdlscreenthread.o .moc/moc_sdlscreenthread.cpp
 
 ####### Install
 

@@ -81,10 +81,8 @@ qDebug() << "PalmPreMouse_private::PalmPreMouse_private ( PalmPreMouse* mouseHan
 
 isKineticMove = false;
 velocity =0;
-rightClick = false ;
-mouseMove = false ;
-_buttonDown = false ;
 
+    
 }
 
 
@@ -153,39 +151,53 @@ QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(x, y), QPoint(x, y
 SDL_Event eventPrev;
 Uint32 last_time ;
 Uint32 lap_time ;
-#define CLICKTIME		150
-#define IGNOREDMOUSEMOVE   	5
-#define PRESSHOLDTIME 		750
-#define SCALEWHEEL		2
+#define CLICKTIME	150
+#define PRESSHOLDOFFSET 10
+#define PRESSHOLDTIME 	1000
+#define SCALEWHEEL	2
 
-
-static const int gMaxDecelerationSpeed = 10;
+static const int gMaxIgnoredMouseMoves = 4;
+static const int gTimerInterval = 30;
+static const int gMaxDecelerationSpeed = 30;
 static const int gFriction = 1;
 
 void PalmPreMouse_private::processSDLMouse(SDL_Event event)
 {
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event)"  <<  event.type << activeWindow->x() << activeWindow->y() ;
+qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event)"  <<  event.type   ;
 
 int x = event.motion.x;
 int y = event.motion.y;
-QPoint localPt, globalPt ;
-
-////localPt = QPoint(x +activeWindow->x(), y +activeWindow->y());
-////globalPt = QPoint(x +activeWindow->x(), y +activeWindow->y());
-localPt = QPoint(x, y);
-globalPt = QPoint(x, y);
 
     lap_time = SDL_GetTicks() - last_time ;
-qDebug() << "lap time" << lap_time << mouseMove;  	     
+qDebug() << "lap time" << lap_time ;  	     
 
-    if ((event.type == SDL_MOUSEMOTION) && _buttonDown )
+    if (event.type == SDL_MOUSEMOTION)
     {
     
 qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEMOTION"  <<  event.type  << x << y << event.motion.xrel << event.motion.yrel  ;
 /////        _mouseHandler->mouseChanged(QPoint(x, y), _buttonDown ? Qt::LeftButton : 0);
 
+	
+#if 0
+////        	    SDL_PixelFormat* fmt = screen->format;
+                    /* If the mouse is moving to the left */
+        if (event.motion.xrel < 0)
+        {
+///    	                SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 255, 0, 0));
+QWindowSystemInterface::handleWheelEvent(activeWindow, QPoint(x, y), QPoint(x, y), event.motion.xrel*scale, Qt::Horizontal);
+
+        }
+        /* If the mouse is moving to the right */
+        if (event.motion.xrel > 0)
+        {
+//                	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 0, 255, 0));
+QWindowSystemInterface::handleWheelEvent(activeWindow, QPoint(x, y), QPoint(x, y), event.motion.xrel*scale, Qt::Horizontal);
+
+        }
+#endif
+        
         /* If the mouse is moving up */
-        if ((abs(event.motion.yrel) > IGNOREDMOUSEMOVE) )
+        if ((event.motion.yrel < 0) && (_buttonDown) && (lap_time > CLICKTIME *2) )
         {
 qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEMOTION inject mouse wheel event"  <<  event.type  << x << y << event.motion.xrel << event.motion.yrel  ;
         
@@ -193,25 +205,24 @@ qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEMOT
         	    /* If the mouse is moving down */
 // inject event into Qt
 // inject event into Qt
-QWindowSystemInterface::handleWheelEvent(activeWindow, localPt, globalPt,
- 					 (event.motion.yrel)*SCALEWHEEL, Qt::Vertical);
-rightClick = false ; 
-mouseMove = true ;
-        }
-	else if ( lap_time > PRESSHOLDTIME  && !mouseMove && !rightClick)
-    	{
-rightClick = true ;
-isKineticMove = false ;
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEMOTION inject mouse event right click"  <<  event.type  << x << y << Qt::RightButton ;
-QWindowSystemInterface::handleMouseEvent(activeWindow, localPt, globalPt, Qt::RightButton) ;
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEMOTION inject mouse event no click"  <<  event.type  << x << y << Qt::NoButton ;
-QWindowSystemInterface::handleMouseEvent(activeWindow, localPt, globalPt, Qt::NoButton);
-	}
+QWindowSystemInterface::handleWheelEvent(activeWindow, QPoint(x, y), QPoint(x, y),
+					 (event.motion.yrel)*SCALEWHEEL, Qt::Vertical);
+
+        } 
+        else if ((event.motion.yrel > 0) && (_buttonDown) && (lap_time > CLICKTIME *2))
+        {
+qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEMOTION inject mouse wheel event"  <<  event.type  << x << y << event.motion.xrel << event.motion.yrel  ;
+        
+//                	SDL_FillRect(screen, NULL, SDL_MapRGB(fmt, 0, 255, 255));
+// inject event into Qt
+QWindowSystemInterface::handleWheelEvent(activeWindow, QPoint(x, y), QPoint(x, y), 
+					 (event.motion.yrel)*SCALEWHEEL, Qt::Vertical);
+	};
     };
 
+
     if ((event.type == SDL_MOUSEBUTTONDOWN) ||
-	(event.type == SDL_MOUSEBUTTONUP) ) 
-    {
+	(event.type == SDL_MOUSEBUTTONUP) ) {
     
 ///    buttonstate = SDL_GetMouseState(NULL, NULL);        
 
@@ -262,63 +273,67 @@ QWindowSystemInterface::handleWheelEvent(0, QPoint(x, y), QPoint(x, y), 5, Qt::V
 // inject event into Qt
 ///QWindowSystemInterface::handleWheelEvent(activeWindow, QPoint(x, y), QPoint(x, y), 500, Qt::Vertical);
 /****/
-
         if (event.type  == SDL_MOUSEBUTTONDOWN)
 	{
 qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEDOWN"  <<  event.type  << x << y << event.button.button ;
-	    rightClick = false ;
+
 	    _buttonDown = true ;
 	    eventPrev = event ;
 	    last_time  = SDL_GetTicks();
 	    
+lastPressPoint = QPoint(x, y);
 isKineticMove = false ;
-mouseMove =  false ;
-rightClick = false ;
+	    
         }
         else // if (event.type  == SDL_MOUSEBUTTONUP)
         {
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP"  <<  event.type  << x << y << event.button.button  ;
+qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP"  <<  event.type  << x << y << event.button.button ;
+
 	     _buttonDown = false ;        
+	    
+
     	     if (lap_time < CLICKTIME)  
     	     { //// left click/double click
 qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event left click"  <<  event.type  << x << y << event.button.button ;
-QWindowSystemInterface::handleMouseEvent(activeWindow, 
-		    QPoint(eventPrev.motion.x, eventPrev.motion.y ), 
-		    QPoint(eventPrev.motion.x, eventPrev.motion.y ),
-	          ((eventPrev.button.button == SDL_BUTTON_LEFT) ? Qt::LeftButton  :Qt::NoButton)
-        	 |((eventPrev.button.button == SDL_BUTTON_RIGHT) ? Qt::RightButton:Qt::NoButton)
-                 |((eventPrev.button.button == SDL_BUTTON_MIDDLE) ? Qt::MidButton :Qt::NoButton));        
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event no click"  <<  event.type  << x << y << Qt::NoButton ;
-QWindowSystemInterface::handleMouseEvent(activeWindow, 
-		    QPoint(eventPrev.motion.x, eventPrev.motion.y), 
-		    QPoint(eventPrev.motion.x, eventPrev.motion.y),
-		    Qt::NoButton);
-rightClick = false ;
+    	     
+QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(eventPrev.motion.x, eventPrev.motion.y), QPoint(eventPrev.motion.x, eventPrev.motion.y),
+              ((eventPrev.button.button == SDL_BUTTON_LEFT) ? Qt::LeftButton  :Qt::NoButton)
+             |((eventPrev.button.button == SDL_BUTTON_RIGHT) ? Qt::RightButton:Qt::NoButton)
+             |((eventPrev.button.button == SDL_BUTTON_MIDDLE) ? Qt::MidButton :Qt::NoButton));        
+QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(eventPrev.motion.x, eventPrev.motion.y), QPoint(eventPrev.motion.x, eventPrev.motion.y), Qt::NoButton);
+
 isKineticMove = false ;
 	     }
- 	     else if ( lap_time > PRESSHOLDTIME  && !mouseMove && !rightClick)
-    	     {
-rightClick = true ;
+	     else if ( (abs(x - eventPrev.motion.x) < PRESSHOLDOFFSET) && (abs(y - eventPrev.motion.y) < PRESSHOLDOFFSET) && (lap_time < PRESSHOLDTIME))
+	     {  ////press and hold right click
+qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event rightt click"  <<  event.type  << x << y << event.button.button ;
+	     
+QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(x, y), QPoint(x, y), Qt::RightButton) ;
+////              ((event.button.button == SDL_BUTTON_LEFT) ? Qt::LeftButton  :Qt::NoButton)
+////             |((event.button.button == SDL_BUTTON_RIGHT) ? Qt::RightButton:Qt::NoButton)
+////             |((event.button.button == SDL_BUTTON_MIDDLE) ? Qt::MidButton :Qt::NoButton));        
+QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(x, y), QPoint(x, y), Qt::NoButton);
+
+////lastReleasePoint = QPoint(x, y);
+////isKineticMove = true;
+////velocity = lastReleasePoint.y() - lastPressPoint.y();
+////	     
 isKineticMove = false ;
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event right click"  <<  event.type  << x << y << Qt::RightButton ;
-QWindowSystemInterface::handleMouseEvent(activeWindow, localPt, globalPt, Qt::RightButton) ;
-qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event no click"  <<  event.type  << x << y << Qt::NoButton ;
-QWindowSystemInterface::handleMouseEvent(activeWindow, localPt, globalPt, Qt::NoButton);
-	     }     	     
+	     } 
 	     else
 	     {    /// move
-////qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event no click"  <<  event.type  << x << y <<  Qt::NoButton ;
-///QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(x, y), QPoint(x, y), Qt::NoButton);
-if (mouseMove)
-{
-    isKineticMove = false;
-    velocity = event.motion.yrel;
-    lastPressPoint = QPoint(x,y);
-}
-else
-    isKineticMove = false;
+	     
+qDebug() << "PalmPreMouse_private::processSDLMouse(SDL_Event event) SDL_MOUSEUP inject mouse event no click"  <<  event.type  << x << y << event.button.button ;
+	     
+QWindowSystemInterface::handleMouseEvent(activeWindow, QPoint(x, y), QPoint(x, y), Qt::NoButton);
+
+lastReleasePoint = QPoint(x, y);
+isKineticMove = true;
+velocity = lastReleasePoint.y() - lastPressPoint.y();
 
 	     };
+
+	    
         };
 
 ///              ((buttonstate & SDL_BUTTON(SDL_BUTTON_LEFT)) ? Qt::LeftButton  :Qt::NoButton)
@@ -340,6 +355,7 @@ void PalmPreMouse_private::kineticMouseMove()
 /////qDebug() << "PalmPreMouse_private::kineticMouseMove()" << isKineticMove;
     if (isKineticMove)
     {
+qDebug() << "kinetic moves...";
       velocity = qBound(-gMaxDecelerationSpeed, velocity, gMaxDecelerationSpeed);
       if( velocity> 0 )
          velocity -= gFriction;

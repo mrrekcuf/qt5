@@ -35,7 +35,7 @@ public:
 };
 
 ////dlgSymbols::dlgSymbols ( SDLScreen* screen, QWidget *parent )
-dlgSymbols::dlgSymbols ( SDLScreen_private* screen, QWidget *parent  )
+dlgSymbols::dlgSymbols ( SDLScreen_private* screen, QWidget *parent )
     : QWidget(parent)
 {
     _screen = screen;
@@ -65,8 +65,7 @@ dlgSymbols::dlgSymbols ( SDLScreen_private* screen, QWidget *parent  )
     symbolList << SymbolChoice("Tab", 0, Qt::Key_Tab);
     symbolList << SymbolChoice("BkTab", 0, Qt::Key_Backtab);
 
-////    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 
     _grabbed = false;
 
@@ -83,62 +82,53 @@ dlgSymbols::dlgSymbols ( SDLScreen_private* screen, QWidget *parent  )
     }
 
     setLayout(grid);
-    
-    
-/////    QWidget::hide();
-    QWidget::show();
+
+    QWidget::hide();
 }
 
 dlgSymbols::~dlgSymbols()
 {
-////    if (_grabbed)
-////        releaseMouse();
+    if (_grabbed)
+        releaseMouse();
 }
 
 void dlgSymbols::show()
 {
-
-qDebug() << "dlgSymbols::show()" << _screen->h <<  height();
-
     // position centered at bottom of screen
 ////    qDebug("screen %d,%d windows %d,%d", _screen->width(), _screen->height(), width(), height());
-////    move((_screen->w - width()) / 2, _screen->h - height() - 1);
-    move((_screen->w - width()) / 2, (_screen->h - height()) / 2 );
-    
+
+////    move((_screen->width() - width()) / 2, _screen->height() - height() - 1);
+
+    grabMouse();
+    _grabbed = true;
 
     QWidget::show();
 
-    _grabbed = true;
-/////    grabMouse();
+    QWidget* nextWidget = QWidget::nextInFocusChain();
 
-////    QWidget* nextWidget = QWidget::nextInFocusChain();
-///    if (nextWidget)
-///        nextWidget->setFocus();
-
+    if (nextWidget)
+        nextWidget->setFocus();
 }
 
 void dlgSymbols::hide()
 {
-qDebug() << "dlgSymbols::hide()";
+    releaseMouse();
+    _grabbed = false;
 
     QWidget::hide();
 
     emit hidden();
+
     if (_symbol)
     {
 ////        QWSServer::sendKeyEvent(_symbol, _symbolKey, Qt::NoModifier, 1, false);
 ////        QWSServer::sendKeyEvent(_symbol, _symbolKey, Qt::NoModifier, 0, false);
         _symbol = 0;
     }
-    
-    _grabbed = false;
-/////    releaseMouse();
-    
 }
 
 void dlgSymbols::key ( int symbol, Qt::Key symbolKey )
 {
-qDebug() << "dlgSymbols::key ( int symbol, Qt::Key symbolKey )" << symbol << symbolKey;
     _symbol = symbol;
     _symbolKey = symbolKey;
 
@@ -147,20 +137,13 @@ qDebug() << "dlgSymbols::key ( int symbol, Qt::Key symbolKey )" << symbol << sym
 
 void dlgSymbols::mousePressEvent( QMouseEvent* e )
 {
-qDebug() << "dlgSymbols::mousePressEvent( QMouseEvent* e )" << e->x() <<  e->y();
-
     QWidget* child = childAt(e->x(), e->y());
 
     if (child) {
        SymbolButton* button = qobject_cast<SymbolButton*>(child);
 
        if (button)
-       {
-qDebug() << "dlgSymbols::mousePressEvent( QMouseEvent* e ) if button" ;
-       
            button->clicked();
-           
-       }
    }
 }
 

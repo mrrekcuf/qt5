@@ -21,7 +21,6 @@ class dlgSymbols : public QWidget
 {
 Q_OBJECT
 public:
-    
 ////    dlgSymbols ( SDLScreen* screen, QWidget *parent = 0 );
     dlgSymbols ( SDLScreen_private* screen, QWidget *parent = 0 );
     virtual ~dlgSymbols();
@@ -36,8 +35,7 @@ public slots:
     virtual void mousePressEvent( QMouseEvent* e );
     virtual void mouseReleaseEvent( QMouseEvent* );
 
-/////private:
-public:
+private:
 /////    SDLScreen* _screen;
     SDLScreen_private* _screen;
     bool _grabbed;

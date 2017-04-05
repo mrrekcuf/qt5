@@ -12,8 +12,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_events.h>
 
-#include <PDL.h>
-
 #include "sdlscreenthread.h"
 #include "sdlscreen_private.h"
 #include "palmpremouse.h"
@@ -21,7 +19,6 @@
 #include "palmprekeyboard.h"
 #include "palmprekeyboard_private.h"
 
-#include "dlgsymbols.h"
 
 
 #include <QDebug>
@@ -68,12 +65,8 @@ void SDLScreenThread::run()
     Uint32 last_time;
     int x;
     int y;
-    
-    PDL_SensorType sensor = PDL_SENSOR_ORIENTATION;
-    PDL_OrientationEvent event1;
 
-    SDL_EnableUNICODE( SDL_ENABLE );
-   
+
     while(!_quit) {
 
         if (_d->_open) {
@@ -103,9 +96,9 @@ void SDLScreenThread::run()
 
 /////Keyboard Event
 ///////
-               if((event.type == SDL_KEYUP) ||
-                  (event.type == SDL_KEYDOWN)) {
-////                if (event.type == SDL_KEYDOWN) {
+                if ((event.type == SDL_KEYUP) ||	
+                   (event.type == SDL_KEYDOWN)) {
+/////                if (event.type == SDL_KEYDOWN) {
 
 ///qDebug() << "SDLScreenThread::run() SDL_KEYDOWN" << event.key.keysym.sym << event.key.keysym.mod << event.key.keysym.unicode;
 ///qDebug() << "SDLScreenThread::run() SDL_KEYDOWN" << SDLK_a << SDLK_1 << SDLK_QUESTION;
@@ -134,76 +127,14 @@ void SDLScreenThread::run()
 //			  the user did a double click
 //		    else
 //		      last_time = now
-                    if (_d->_keyboardHandler->d->_dlgSymbols==NULL)
-                    {
-			_d->_mouseHandler->d->processSDLMouse(event);
-		    } 
-		    else if (!_d->_keyboardHandler->d->_dlgSymbols->_grabbed)
-		    {
-			_d->_mouseHandler->d->processSDLMouse(event);
-		    } ;
+
+		    _d->_mouseHandler->d->processSDLMouse(event);
 		    
                 };
 
-	        if (event.type == SDL_VIDEORESIZE) {
-qDebug() << "event.type == SDL_VIDEORESIZE w:" << event.resize.w << " h:" <<  event.resize.h;
-	        
-	        }
-
                 
             };
-            
         }
-
-        if (PDL_GetHardwareID()> HARDWARE_PRE_3)
-        {
-
-///qDebug() << "th PDL_EnableSensor"  <<  
-////	PDL_EnableSensor(sensor, PDL_TRUE);
-/////qDebug() << "th PDL_PollSensor" << 
-	PDL_PollSensor(sensor, (PDL_SensorEvent *)&event1);
-
-////	PDL_EnableSensor(sensor, PDL_FALSE);
-
-/////qDebug() << "th PDL_PollSensor result " << event1.type << " " <<  PDL_SENSOR_ORIENTATION << " " << event1.orientation;
-
-        if (event1.type==PDL_SENSOR_ORIENTATION) //PDL_SENSOR_ROTATION)
-        {
-qDebug() << "th PDL_PollSensor result " << event1.type << " " <<  PDL_SENSOR_ORIENTATION << " " << event1.orientation;
-	    _d->orientation = event1.orientation;
-        
-///qDebug() << event1.orientation ;
-            switch (event1.orientation)
-	    {
-    	        case 4:
-        //            output.append("Top up");
-    	            break;
-                case 3:
-        //            output.append("Top down");
-	            break;
-    	        case 5:
-        //            output.append("Left up");
-        	    break;
-        	case 6:
-        //           output.append("Right up");
-                    break;
-                case 1:
-        //            output.append("Face up");
-	            break;
-	        case 2:
-        //            output.append("Face down");
-                break;
-    	        case 0:
-        //            output.append("Undefined");
-        	    break;
-        ////        default:
-        //        output = "Invalid enum value";
-            } // switch
-        /////    ui->OrientationValue->setText(output);
-        ///// qDebug() << output;
-	} ;    
-	
-	};
 
 /////        QThread::msleep(10);
         QThread::msleep(10);        

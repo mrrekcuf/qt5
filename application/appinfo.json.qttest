@@ -1,0 +1,11 @@
+{
+	"title": "QT5 test",
+	"type": "pdk",
+	"main": "qttest",
+        "icon": "browser.ico",
+	"id": "com.kcuf.app.qttest",
+	"version": "2.2.2",
+	"vendor": "K C U F 工作室",
+        "requiredMemory": 150
+}
+

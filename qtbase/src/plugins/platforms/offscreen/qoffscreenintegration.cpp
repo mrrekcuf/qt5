@@ -71,7 +71,6 @@
 #endif
 
 
-
 QT_BEGIN_NAMESPACE
 
 template <typename BaseEventDispatcher>
@@ -146,7 +145,7 @@ qDebug() << "QOffscreenIntegration::~QOffscreenIntegration()";
 
 bool QOffscreenIntegration::hasCapability(QPlatformIntegration::Capability cap) const
 {
-qDebug() << "QOffscreenIntegration::hasCapability(QPlatformIntegration::Capability cap" << cap;
+qDebug() << "QOffscreenIntegration::hasCapability(QPlatformIntegration::Capability cap";
     switch (cap) {
     case ThreadedPixmaps: return true;
     case MultipleWindows: return true;
@@ -208,46 +207,5 @@ QPlatformServices *QOffscreenIntegration::services() const
 qDebug() << "QOffscreenIntegration::services()";
     return m_services.data();
 }
-
-
-
-
-QVariant QOffscreenIntegration::styleHint(QPlatformIntegration::StyleHint hint) const
-{
-
-/////qDebug() << "QOffscreenIntegration::styleHint(QPlatformIntegration::StyleHint hint)" << hint;
-
-    switch (hint) {
-    case QPlatformIntegration::CursorFlashTime:
-/////        if (const unsigned timeMS = GetCaretBlinkTime())
-////            return QVariant(timeMS != INFINITE ? int(timeMS) * 2 : 0);
-        break;
-#ifdef SPI_GETKEYBOARDSPEED
-    case KeyboardAutoRepeatRate:
-        return QVariant(keyBoardAutoRepeatRateMS());
-#endif
-    case QPlatformIntegration::StartDragTime:
-    case QPlatformIntegration::StartDragDistance:
-    case QPlatformIntegration::KeyboardInputInterval:
-    case QPlatformIntegration::ShowIsFullScreen:
-////qDebug() << "QOffscreenIntegration::styleHint(QPlatformIntegration::StyleHint hint) mmm" << QPlatformIntegration::ShowIsFullScreen;
-    
-    case QPlatformIntegration::PasswordMaskDelay:
-    case QPlatformIntegration::StartDragVelocity:
-        break; // Not implemented
-    case QPlatformIntegration::FontSmoothingGamma:
-////        return QVariant(QWindowsFontDatabase::fontSmoothingGamma());
-    case QPlatformIntegration::MouseDoubleClickInterval:
-////        if (const int ms = GetDoubleClickTime())
-////            return QVariant(ms);
-        break;
-    case QPlatformIntegration::UseRtlExtensions:
-/////        return QVariant(d->m_context.useRTLExtensions());
-    default:
-        break;
-    }
-    return QPlatformIntegration::styleHint(hint);
-}
-
 
 QT_END_NAMESPACE

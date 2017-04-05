@@ -37,8 +37,7 @@ public:
     bool _showDebugInfo;
 
     bool _buttonDown;
-    bool rightClick;
-    bool mouseMove ;
+
     void processSDLMouse(SDL_Event event);
 
 
